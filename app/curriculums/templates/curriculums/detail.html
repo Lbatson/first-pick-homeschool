@@ -1,4 +1,8 @@
-{% if curriculum %}
+{% extends "base.html" %}
+
+{% block title %}HomeSchoolReviews - Curriculum - {{ curriculum.name }}{% endblock %}
+
+{% block content %}
 <h1>{{ curriculum.name }}</h1>
 <p>{{ curriculum.description }}</p>
-{% endif %}
+{% endblock %}

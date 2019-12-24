@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}HomeSchoolReviews - Curriculums{% endblock %}
+
+{% block content %}
 {% if curriculums %}
 <ul>
     {% for curriculum in curriculums %}
@@ -7,3 +12,4 @@
 {% else %}
 <p>No curriculums are available.</p>
 {% endif %}
+{% endblock %}
