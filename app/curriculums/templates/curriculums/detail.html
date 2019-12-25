@@ -5,4 +5,9 @@
 {% block content %}
 <h1>{{ curriculum.name }}</h1>
 <p>{{ curriculum.description }}</p>
+{% include 'curriculums/group.html' with header="Categories" list=categories %}
+{% include 'curriculums/group.html' with header="Subjects" list=subjects %}
+{% include 'curriculums/group.html' with header="Grades" list=grades %}
+{% include 'curriculums/group.html' with header="Levels" list=levels %}
+{% include 'curriculums/group.html' with header="Ages" list=ages %}
 {% endblock %}
