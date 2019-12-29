@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 
 # Create your models here.
@@ -40,6 +41,7 @@ class Age(models.Model):
 class Curriculum(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=2000)
+    link = models.URLField(max_length=200)
     is_confirmed = models.BooleanField(default=False)
     categories = models.ManyToManyField(Category, related_name='curriculums')
     subjects = models.ManyToManyField(Subject, related_name='curriculums')
@@ -51,3 +53,9 @@ class Curriculum(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CurriculumForm(ModelForm):
+    class Meta:
+        model = Curriculum
+        fields = ['name', 'description', 'link']
