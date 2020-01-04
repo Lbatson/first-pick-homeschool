@@ -4,6 +4,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Category(models.Model):
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -12,6 +16,13 @@ class Category(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
+    category = models.ForeignKey(
+        Category,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='subjects'
+    )
 
     def __str__(self):
         return self.name
@@ -48,28 +59,20 @@ class Publisher(models.Model):
 
 class Curriculum(models.Model):
 
-    class Consumable(models.TextChoices):
-        YES = 'Y', _('Yes')
-        NO = 'N', _('No')
-        MIXED = 'M', _('Mixed')
-
     class Format(models.TextChoices):
         RESOURCE = 'R', _('Resource')
         TEXTBOOK = 'T', _('Textbook')
         WORKBOOK = 'W', _('Workbook')
 
+    class Consumable(models.TextChoices):
+        YES = 'Y', _('Yes')
+        NO = 'N', _('No')
+        MIXED = 'M', _('Mixed')
+
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=2000)
     link = models.URLField(max_length=200)
     is_confirmed = models.BooleanField(default=False)
-    consumable = models.CharField(
-        max_length=1,
-        null=True,
-        choices=Consumable.choices
-    )
-    subscription = models.BooleanField(default=False)
-    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
-    categories = models.ManyToManyField(Category, related_name='curriculums')
     subjects = models.ManyToManyField(Subject, related_name='curriculums')
     grades = models.ManyToManyField(Grade, related_name='curriculums')
     levels = models.ManyToManyField(Level, related_name='curriculums')
@@ -78,6 +81,18 @@ class Curriculum(models.Model):
         Publisher,
         on_delete=models.CASCADE,
         related_name='curriculums'
+    )
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    subscription = models.BooleanField(default=False)
+    format = models.CharField(
+        max_length=1,
+        null=True,
+        choices=Format.choices
+    )
+    consumable = models.CharField(
+        max_length=1,
+        null=True,
+        choices=Consumable.choices
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

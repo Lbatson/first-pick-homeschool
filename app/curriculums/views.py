@@ -10,9 +10,13 @@ def index(request):
 
 def detail(request, id):
     curriculum = get_object_or_404(Curriculum, pk=id, is_confirmed=True)
+    categories = set(map(
+        lambda s: s.category,
+        curriculum.subjects.select_related('category')
+    ))
     context = {
         'curriculum': curriculum,
-        'categories': curriculum.categories.all(),
+        'categories': categories,
         'subjects': curriculum.subjects.all(),
         'grades': curriculum.grades.all(),
         'levels': curriculum.levels.all(),
