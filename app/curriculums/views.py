@@ -9,7 +9,7 @@ def index(request):
 
 
 def detail(request, id):
-    curriculum = get_object_or_404(Curriculum, pk=id)
+    curriculum = get_object_or_404(Curriculum, pk=id, is_confirmed=True)
     context = {
         'curriculum': curriculum,
         'categories': curriculum.categories.all(),
