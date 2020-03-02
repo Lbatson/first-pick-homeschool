@@ -6,7 +6,7 @@
 {% if curriculums %}
 <ul>
     {% for curriculum in curriculums %}
-    <li><a href="{% url 'detail' curriculum.id %}">{{ curriculum.name }}</a></li>
+    <li><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></li>
     {% endfor %}
 </ul>
 {% else %}
