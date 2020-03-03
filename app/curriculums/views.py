@@ -1,11 +1,14 @@
 from django.shortcuts import get_object_or_404, render
+from django.views import generic
 
 from .models import Curriculum, CurriculumForm
 
 
-def index(request):
-    context = {'curriculums': Curriculum.objects.all()}
-    return render(request, 'curriculums/index.html', context)
+class IndexView(generic.ListView):
+    model = Curriculum
+    paginate_by = 100
+    template_name = 'curriculums/index.html'
+    context_object_name = 'curriculums'
 
 
 def detail(request, id):
