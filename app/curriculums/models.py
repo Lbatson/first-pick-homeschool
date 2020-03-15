@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
@@ -93,6 +94,12 @@ class Curriculum(models.Model):
         max_length=1,
         null=True,
         choices=Consumable.choices
+    )
+    created_by = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='curriculums'
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
