@@ -1,12 +1,12 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
 from .models import Curriculum, CurriculumForm
 
 
-class IndexView(generic.ListView):
+class CurriculumIndexView(generic.ListView):
     model = Curriculum
-    paginate_by = 100
     template_name = 'curriculums/index.html'
     context_object_name = 'curriculums'
 
@@ -28,18 +28,8 @@ def detail(request, id):
     return render(request, 'curriculums/detail.html', context)
 
 
-def create(request):
-    path = 'curriculums/create.html'
-
-    if request.method == 'POST':
-        form = CurriculumForm(request.POST)
-        if not form.is_valid:
-            context = {'error_message': form.errors}
-            return render(request, path, context)
-        else:
-            form.save()
-            context = {'form': CurriculumForm()}
-            return render(request, path, context)
-    else:
-        context = {'form': CurriculumForm()}
-        return render(request, path, context)
+class CurriculumCreateView(SuccessMessageMixin, generic.CreateView):
+    form_class = CurriculumForm
+    template_name = 'curriculums/create.html'
+    success_url = '/curriculums/create/'
+    success_message = 'Your request to add a curriculum was submitted'

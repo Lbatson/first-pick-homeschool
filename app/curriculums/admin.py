@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import Curriculum, Category, Subject, Grade, Level, Age, Publisher
+
+from .models import (
+    Curriculum,
+    Category,
+    Subject,
+    Grade,
+    Level,
+    Age,
+    Publisher
+)
 
 
 class CurriculumAdmin(admin.ModelAdmin):

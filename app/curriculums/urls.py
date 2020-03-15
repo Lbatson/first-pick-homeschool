@@ -1,10 +1,15 @@
 from django.urls import path
 
-from . import views
+from .views import (
+    CurriculumIndexView,
+    detail,
+    CurriculumCreateView
+)
+
 
 app_name = 'curriculums'
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
-    path('<int:id>/', views.detail, name='detail'),
-    path('create/', views.create, name='create')
+    path('', CurriculumIndexView.as_view(), name='index'),
+    path('<int:id>/', detail, name='detail'),
+    path('create/', CurriculumCreateView.as_view(), name='create')
 ]

@@ -104,4 +104,4 @@ class Curriculum(models.Model):
 class CurriculumForm(ModelForm):
     class Meta:
         model = Curriculum
-        fields = ['name', 'description', 'link']
+        fields = ['name', 'description', 'link', 'publisher']
