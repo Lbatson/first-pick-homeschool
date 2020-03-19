@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
@@ -28,7 +29,11 @@ def detail(request, id):
     return render(request, 'curriculums/detail.html', context)
 
 
-class CurriculumCreateView(SuccessMessageMixin, generic.CreateView):
+class CurriculumCreateView(
+    LoginRequiredMixin,
+    SuccessMessageMixin,
+    generic.CreateView
+):
     form_class = CurriculumForm
     template_name = 'curriculums/create.html'
     success_url = '/curriculums/create/'

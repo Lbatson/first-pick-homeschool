@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
@@ -96,7 +96,7 @@ class Curriculum(models.Model):
         choices=Consumable.choices
     )
     created_by = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         null=True,
         on_delete=models.SET_NULL,
         related_name='curriculums'
