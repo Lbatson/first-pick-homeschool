@@ -7,10 +7,10 @@
         {% endblock head_favicon %}
         {% block head_meta %}
             {% block head_meta_charset %}
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
             {% endblock head_meta_charset %}
             {% block head_meta_contentlanguage %}
-                <meta http-equiv="Content-Language" value="en-US" />
+                <meta http-equiv="Content-Language" value="en-US">
             {% endblock head_meta_contentlanguage %}
             {% block head_meta_viewport %}
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,7 +29,9 @@
             {% block navigation %}
                 {% include 'navigation.html' %}
             {% endblock navigation %}
-            {% block content %}{% endblock content %}
+            <div class="container">
+                {% block content %}{% endblock content %}
+            </div>
         {% endblock body %}
     </body>
     <footer>
