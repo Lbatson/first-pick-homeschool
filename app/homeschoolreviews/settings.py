@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     # apps
     'curriculums',
     'users'
@@ -82,8 +83,14 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
+
 SITE_ID = 1
+
 AUTH_USER_MODEL = 'users.User'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 WSGI_APPLICATION = 'homeschoolreviews.wsgi.application'
 
