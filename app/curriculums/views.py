@@ -38,3 +38,7 @@ class CurriculumCreateView(
     template_name = 'curriculums/create.html'
     success_url = '/curriculums/create/'
     success_message = 'Your request to add a curriculum was submitted'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
