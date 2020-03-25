@@ -6,6 +6,7 @@ from django.views import generic
 from .models import (
     Curriculum,
     CurriculumForm,
+    Category,
     Subject,
     Grade,
     Level,
@@ -23,6 +24,7 @@ class CurriculumIndexView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
         context['subjects'] = Subject.objects.all()
         context['grades'] = Grade.objects.all()
         context['levels'] = Level.objects.all()

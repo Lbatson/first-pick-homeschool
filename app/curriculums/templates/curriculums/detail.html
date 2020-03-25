@@ -5,9 +5,9 @@
 {% block content %}
 <h1>{{ curriculum.name }}</h1>
 <p>{{ curriculum.description }}</p>
-{% include 'curriculums/group.html' with header="Categories" list=categories %}
-{% include 'curriculums/group.html' with header="Subjects" list=subjects %}
-{% include 'curriculums/group.html' with header="Grades" list=grades %}
-{% include 'curriculums/group.html' with header="Levels" list=levels %}
-{% include 'curriculums/group.html' with header="Ages" list=ages %}
+{% include 'curriculums/group.html' with name="categories" list=categories %}
+{% include 'curriculums/group.html' with name="subjects" list=subjects %}
+{% include 'curriculums/group.html' with name="grades" list=grades %}
+{% include 'curriculums/group.html' with name="levels" list=levels %}
+{% include 'curriculums/group.html' with name="ages" list=ages %}
 {% endblock %}

@@ -1,4 +1,5 @@
-<h3>{{ header }}</h3>
-{% for l in list %}
-    <li>{{ l.name }}</li>
+{# {% include 'curriculums/group.html' with name="" list= %} #}
+<h3>{{ name.capitalize }}</h3>
+{% for item in list %}
+    <li>{{ item.name }}</li>
 {% endfor %}
