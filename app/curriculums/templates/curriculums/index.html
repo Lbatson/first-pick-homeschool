@@ -3,19 +3,45 @@
 {% block title %}HomeSchool Reviews - Curriculums{% endblock %}
 
 {% block content %}
-{% if curriculums %}
-<ul class="list-unstyled">
-    {% for curriculum in curriculums %}
-    <li class="media my-2">
-        <img src="https://via.placeholder.com/64" class="mr-3" alt="{{ curriculum.name }}">
-        <div class="media-body">
-            <h5><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></h5>
-            <p>{{ curriculum.description }}</p>
+<form action="{% url 'curriculums:index' %}" method="get">
+    <div class="row">
+        <div class="col-12">
+            <div class="input-group">
+                <input class="form-control" name="search" aria-describedby="search" type="text">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
         </div>
-    </li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No curriculums are available.</p>
-{% endif %}
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    {% include 'curriculums/radio-group.html' with name="subject" list=subjects %}
+                    {% include 'curriculums/radio-group.html' with name="grade" list=grades %}
+                    {% include 'curriculums/radio-group.html' with name="level" list=levels %}
+                    {% include 'curriculums/radio-group.html' with name="age" list=ages %}
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-8 col-lg-9">
+            {% if curriculums %}
+            <ul class="list-unstyled">
+                {% for curriculum in curriculums %}
+                <li class="media my-2">
+                    <img src="https://via.placeholder.com/64" class="mr-3" alt="{{ curriculum.name }}">
+                    <div class="media-body">
+                        <h5><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></h5>
+                        <p>{{ curriculum.description }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No curriculums are available.</p>
+            {% endif %}
+        </div>
+    </div>
+</form>
 {% endblock %}

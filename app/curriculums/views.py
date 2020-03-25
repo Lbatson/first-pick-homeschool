@@ -3,13 +3,31 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
-from .models import Curriculum, CurriculumForm
+from .models import (
+    Curriculum,
+    CurriculumForm,
+    Subject,
+    Grade,
+    Level,
+    Age
+)
 
 
 class CurriculumIndexView(generic.ListView):
     model = Curriculum
     template_name = 'curriculums/index.html'
     context_object_name = 'curriculums'
+
+    def get_queryset(self):
+        return Curriculum.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['subjects'] = Subject.objects.all()
+        context['grades'] = Grade.objects.all()
+        context['levels'] = Level.objects.all()
+        context['ages'] = Age.objects.all()
+        return context
 
 
 def detail(request, id):
