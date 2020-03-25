@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 
@@ -20,16 +21,45 @@ class CurriculumIndexView(generic.ListView):
     context_object_name = 'curriculums'
 
     def get_queryset(self):
-        return Curriculum.objects.all()
+        query = Q()
+        filters = self.get_filters()
+
+        if filters['categories']:
+            query.add(Q(subjects__category__id__in=filters['categories']), Q.OR)
+
+        if filters['subjects']:
+            query.add(Q(subjects__id__in=filters['subjects']), Q.OR)
+
+        if filters['grades']:
+            query.add(Q(grades__id__in=filters['grades']), Q.OR)
+
+        if filters['levels']:
+            query.add(Q(levels__id__in=filters['levels']), Q.OR)
+
+        if filters['ages']:
+            query.add(Q(ages__id__in=filters['ages']), Q.OR)
+
+        print(Curriculum.objects.filter(query).distinct().query)
+        return Curriculum.objects.filter(query).distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        context['subjects'] = Subject.objects.all()
-        context['grades'] = Grade.objects.all()
-        context['levels'] = Level.objects.all()
-        context['ages'] = Age.objects.all()
+        context['filters'] = self.get_filters()
+        context['categories'] = list(Category.objects.all())
+        context['subjects'] = list(Subject.objects.all())
+        context['grades'] = list(Grade.objects.all())
+        context['levels'] = list(Level.objects.all())
+        context['ages'] = list(Age.objects.all())
         return context
+
+    def get_filters(self):
+        return {
+            'categories': list(map(int, self.request.GET.getlist('category'))),
+            'subjects': list(map(int, self.request.GET.getlist('subject'))),
+            'grades': list(map(int, self.request.GET.getlist('grade'))),
+            'levels': list(map(int, self.request.GET.getlist('level'))),
+            'ages': list(map(int, self.request.GET.getlist('age')))
+        }
 
 
 def detail(request, id):
