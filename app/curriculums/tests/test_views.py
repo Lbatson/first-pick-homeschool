@@ -1,54 +1,27 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from curriculums.models import (
-    Category,
-    Subject,
-    Grade,
-    Level,
-    Age,
-    Publisher,
-    Curriculum
-)
+from .test_utils import create_curriculum
+from curriculums.urls import app_name
+from curriculums.models import Curriculum
 
 
 class CurriculumIndexViewTest(TestCase):
+    ID = 1
+
     @classmethod
     def setUpTestData(cls):
-        category = Category.objects.create(name='TestCategory')
-        subject = Subject.objects.create(name='TestSubject', category=category)
-        grade = Grade.objects.create(name='TestGrade')
-        level = Level.objects.create(name='TestLevel')
-        age = Age.objects.create(name='999')
-        publisher = Publisher.objects.create(name='TestPublisher')
-        user = get_user_model().objects.create_user(
-            email='Test@test.test',
-            username='TestUser',
-            password='TestPassword'
-        )
-        user.save()
-        curriculum = Curriculum.objects.create(
-            name='TestCurriculum',
-            description='TestDescription',
-            link='http://localhost',
-            publisher=publisher,
-            created_by=user
-        )
-        curriculum.subjects.add(subject)
-        curriculum.grades.add(grade)
-        curriculum.levels.add(level)
-        curriculum.ages.add(age)
+        create_curriculum(CurriculumIndexViewTest.ID)
 
     def test_view_curriculums_url_settings_and_template(self):
-        response = self.client.get('/curriculums/')
+        response = self.client.get(f'/{app_name}/')
         self.assertEqual(response.status_code, 200)
-        response = self.client.get(reverse('curriculums:index'))
+        response = self.client.get(reverse(f'{app_name}:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'curriculums/index.html') 
+        self.assertTemplateUsed(response, f'{app_name}/index.html')
 
     def test_view_curriculums_lists_all(self):
-        response = self.client.get(reverse('curriculums:index'))
+        response = self.client.get(reverse(f'{app_name}:index'))
         self.assertEqual(response.status_code, 200)
-        curriculum = Curriculum.objects.get(name='TestCurriculum')
-        self.assertEqual(list(response.context['curriculums']), [curriculum])
+        curriculum = Curriculum.objects.get(name=CurriculumIndexViewTest.ID)
+        self.assertEqual(list(response.context[app_name]), [curriculum])

@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
+from .test_utils import create_curriculum
 from curriculums.models import (
     Category,
     Subject,
@@ -13,54 +14,34 @@ from curriculums.models import (
 
 
 class CurriculumModelsTest(TestCase):
+    ID = 1
+
     @classmethod
     def setUpTestData(cls):
-        category = Category.objects.create(name='TestCategory')
-        subject = Subject.objects.create(name='TestSubject', category=category)
-        grade = Grade.objects.create(name='TestGrade')
-        level = Level.objects.create(name='TestLevel')
-        age = Age.objects.create(name='999')
-        publisher = Publisher.objects.create(name='TestPublisher')
-        user = get_user_model().objects.create_user(
-            email='Test@test.test',
-            username='TestUser',
-            password='TestPassword'
-        )
-        user.save()
-        curriculum = Curriculum.objects.create(
-            name='TestCurriculum',
-            description='TestDescription',
-            link='http://localhost',
-            publisher=publisher,
-            created_by=user
-        )
-        curriculum.subjects.add(subject)
-        curriculum.grades.add(grade)
-        curriculum.levels.add(level)
-        curriculum.ages.add(age)
+        create_curriculum(CurriculumModelsTest.ID)
 
     def test_model_category(self):
-        category = Category.objects.get(name='TestCategory')
+        category = Category.objects.get(name=CurriculumModelsTest.ID)
 
         self.assertIsInstance(category, Category)
         self.assertEquals(category._meta.verbose_name, 'Category')
         self.assertEquals(category._meta.verbose_name_plural, 'Categories')
 
     def test_model_subject(self):
-        category = Category.objects.get(name='TestCategory')
-        subject = Subject.objects.get(name='TestSubject')
+        category = Category.objects.get(name=CurriculumModelsTest.ID)
+        subject = Subject.objects.get(name=CurriculumModelsTest.ID)
 
         self.assertIsInstance(subject, Subject)
         self.assertEquals(subject.category, category)
 
     def test_model_curriculum(self):
-        curriculum = Curriculum.objects.get(name='TestCurriculum')
-        subject = Subject.objects.get(name='TestSubject')
-        grade = Grade.objects.get(name='TestGrade')
-        level = Level.objects.get(name='TestLevel')
-        age = Age.objects.get(name='999')
-        publisher = Publisher.objects.get(name='TestPublisher')
-        user = get_user_model().objects.get(username='TestUser')
+        curriculum = Curriculum.objects.get(name=CurriculumModelsTest.ID)
+        subject = Subject.objects.get(name=CurriculumModelsTest.ID)
+        grade = Grade.objects.get(name=CurriculumModelsTest.ID)
+        level = Level.objects.get(name=CurriculumModelsTest.ID)
+        age = Age.objects.get(name=CurriculumModelsTest.ID)
+        publisher = Publisher.objects.get(name=CurriculumModelsTest.ID)
+        user = get_user_model().objects.get(username=CurriculumModelsTest.ID)
 
         self.assertIsInstance(curriculum, Curriculum)
         self.assertEquals(curriculum.is_confirmed, False)
