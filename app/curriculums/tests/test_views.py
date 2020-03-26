@@ -7,21 +7,61 @@ from curriculums.models import Curriculum
 
 
 class CurriculumIndexViewTest(TestCase):
-    ID = 1
-
     @classmethod
     def setUpTestData(cls):
-        create_curriculum(CurriculumIndexViewTest.ID)
+        for i in range(5):
+            create_curriculum(i + 1)
 
     def test_view_curriculums_url_settings_and_template(self):
         response = self.client.get(f'/{app_name}/')
         self.assertEqual(response.status_code, 200)
+
         response = self.client.get(reverse(f'{app_name}:index'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, f'{app_name}/index.html')
 
     def test_view_curriculums_lists_all(self):
-        response = self.client.get(reverse(f'{app_name}:index'))
+        response = self.client.get(f'/{app_name}/')
+        curriculums = Curriculum.objects.all()
+
         self.assertEqual(response.status_code, 200)
-        curriculum = Curriculum.objects.get(name=CurriculumIndexViewTest.ID)
+        self.assertEqual(len(response.context[app_name]), 5)
+        self.assertEqual(
+            list(response.context[app_name].order_by('id')),
+            list(curriculums.order_by('id'))
+        )
+
+    def test_view_curriculums_lists_filter_categories(self):
+        curriculum = Curriculum.objects.get(name=1)
+        category = curriculum.subjects.all().first().category.id
+        response = self.client.get(f'/{app_name}/?category={category}')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context[app_name]), 1)
         self.assertEqual(list(response.context[app_name]), [curriculum])
+
+    def test_view_curriculums_lists_filter_multiple_params(self):
+        curriculum = Curriculum.objects.get(name=1)
+        grade = curriculum.grades.all().first().id
+        level = curriculum.levels.all().first().id
+        age = curriculum.ages.all().first().id
+        response = self.client.get(
+            f'/{app_name}/?grade={grade}&level={level}&age={age}'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context[app_name]), 1)
+        self.assertEqual(list(response.context[app_name]), [curriculum])
+
+    def test_view_curriculums_lists_filter_multiple_values(self):
+        curriculums = Curriculum.objects.all().order_by('id')
+        grades = list(map(lambda x: x.grades.all().first().id, curriculums))[:4]
+        query_string = '?' + '&'.join(list(map(lambda x: f'grade={x}', grades)))
+        response = self.client.get(f'/{app_name}/{query_string}')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context[app_name]), 4)
+        self.assertEqual(
+            list(response.context[app_name].order_by('id')),
+            list(curriculums)[:4]
+        )

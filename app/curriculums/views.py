@@ -31,13 +31,13 @@ class CurriculumIndexView(generic.ListView):
             query.add(Q(subjects__id__in=filters['subjects']), Q.OR)
 
         if filters['grades']:
-            query.add(Q(grades__id__in=filters['grades']), Q.OR)
+            query.add(Q(grades__id__in=filters['grades']), Q.AND)
 
         if filters['levels']:
-            query.add(Q(levels__id__in=filters['levels']), Q.OR)
+            query.add(Q(levels__id__in=filters['levels']), Q.AND)
 
         if filters['ages']:
-            query.add(Q(ages__id__in=filters['ages']), Q.OR)
+            query.add(Q(ages__id__in=filters['ages']), Q.AND)
 
         return Curriculum.objects.filter(query).distinct()
 
