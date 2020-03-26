@@ -39,7 +39,6 @@ class CurriculumIndexView(generic.ListView):
         if filters['ages']:
             query.add(Q(ages__id__in=filters['ages']), Q.OR)
 
-        print(Curriculum.objects.filter(query).distinct().query)
         return Curriculum.objects.filter(query).distinct()
 
     def get_context_data(self, **kwargs):

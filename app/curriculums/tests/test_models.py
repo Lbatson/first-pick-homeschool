@@ -12,7 +12,7 @@ from curriculums.models import (
 )
 
 
-class CurriculumTestClass(TestCase):
+class CurriculumModelsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         category = Category.objects.create(name='TestCategory')
@@ -39,21 +39,21 @@ class CurriculumTestClass(TestCase):
         curriculum.levels.add(level)
         curriculum.ages.add(age)
 
-    def test_category_model(self):
+    def test_model_category(self):
         category = Category.objects.get(name='TestCategory')
 
         self.assertIsInstance(category, Category)
         self.assertEquals(category._meta.verbose_name, 'Category')
         self.assertEquals(category._meta.verbose_name_plural, 'Categories')
 
-    def test_subject_model(self):
+    def test_model_subject(self):
         category = Category.objects.get(name='TestCategory')
         subject = Subject.objects.get(name='TestSubject')
 
         self.assertIsInstance(subject, Subject)
         self.assertEquals(subject.category, category)
 
-    def test_curriculum_model(self):
+    def test_model_curriculum(self):
         curriculum = Curriculum.objects.get(name='TestCurriculum')
         subject = Subject.objects.get(name='TestSubject')
         grade = Grade.objects.get(name='TestGrade')
