@@ -58,6 +58,20 @@ class Publisher(models.Model):
         return self.name
 
 
+class Sort():
+    class Labels(models.IntegerChoices):
+        NEWEST = 1, _('Newest'),
+        OLDEST = 2, _('Oldest'),
+        NAME = 3, _('A-Z'),
+        NAME_REVERSED = 4, _('Z-A')
+
+    class Values(models.IntegerChoices):
+        NEWEST = 1, '-created',
+        OLDEST = 2, 'created',
+        NAME = 3, 'name',
+        NAME_REVERSED = 4, '-name'
+
+
 class Curriculum(models.Model):
 
     class Format(models.TextChoices):

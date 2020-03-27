@@ -11,7 +11,8 @@ from .models import (
     Subject,
     Grade,
     Level,
-    Age
+    Age,
+    Sort
 )
 
 
@@ -23,6 +24,7 @@ class CurriculumIndexView(generic.ListView):
     def get_queryset(self):
         query = Q()
         filters = self.get_filters()
+        order = self.get_sort().label
 
         if filters['categories']:
             query.add(Q(subjects__category__id__in=filters['categories']), Q.OR)
@@ -39,11 +41,13 @@ class CurriculumIndexView(generic.ListView):
         if filters['ages']:
             query.add(Q(ages__id__in=filters['ages']), Q.AND)
 
-        return Curriculum.objects.filter(query).distinct()
+        return Curriculum.objects.filter(query).distinct().order_by(order)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filters'] = self.get_filters()
+        context['sorters'] = Sort.Labels.choices
+        context['sort'] = self.request.GET.get('sort')
         context['categories'] = list(Category.objects.all())
         context['subjects'] = list(Subject.objects.all())
         context['grades'] = list(Grade.objects.all())
@@ -52,13 +56,26 @@ class CurriculumIndexView(generic.ListView):
         return context
 
     def get_filters(self):
+        def get_selections(name):
+            try:
+                return list(map(int, self.request.GET.getlist(name)))
+            except:
+                return []
+
         return {
-            'categories': list(map(int, self.request.GET.getlist('category'))),
-            'subjects': list(map(int, self.request.GET.getlist('subject'))),
-            'grades': list(map(int, self.request.GET.getlist('grade'))),
-            'levels': list(map(int, self.request.GET.getlist('level'))),
-            'ages': list(map(int, self.request.GET.getlist('age')))
+            'categories': get_selections('category'),
+            'subjects': get_selections('subject'),
+            'grades': get_selections('grade'),
+            'levels': get_selections('level'),
+            'ages': get_selections('age')
         }
+
+    def get_sort(self):
+        try:
+            s = self.request.GET.get('sort')
+            return Sort.Values(int(s)) if s.isdigit() else Sort.Values.NEWEST
+        except:
+            return Sort.Values.NEWEST
 
 
 def detail(request, id):
