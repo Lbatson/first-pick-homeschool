@@ -26,12 +26,18 @@ class CurriculumIndexView(generic.ListView):
         query = Q()
         filters = self.get_filters()
         order = self.get_sort().label
+        search = self.request.GET.get('search')
+
+        if search:
+            query.add(Q(name__icontains=search), Q.OR)
+            query.add(Q(description__icontains=search), Q.OR)
+            query.add(Q(publisher__name__icontains=search), Q.OR)
 
         if filters['categories']:
-            query.add(Q(subjects__category__id__in=filters['categories']), Q.OR)
+            query.add(Q(subjects__category__id__in=filters['categories']), Q.AND)
 
         if filters['subjects']:
-            query.add(Q(subjects__id__in=filters['subjects']), Q.OR)
+            query.add(Q(subjects__id__in=filters['subjects']), Q.AND)
 
         if filters['grades']:
             query.add(Q(grades__id__in=filters['grades']), Q.AND)
