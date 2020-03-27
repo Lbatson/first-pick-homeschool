@@ -20,6 +20,7 @@ class CurriculumIndexView(generic.ListView):
     model = Curriculum
     template_name = 'curriculums/index.html'
     context_object_name = 'curriculums'
+    paginate_by = 20
 
     def get_queryset(self):
         query = Q()
