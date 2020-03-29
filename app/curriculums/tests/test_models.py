@@ -9,7 +9,8 @@ from curriculums.models import (
     Level,
     Age,
     Publisher,
-    Curriculum
+    Curriculum,
+    Review
 )
 
 
@@ -55,3 +56,22 @@ class CurriculumModelsTest(TestCase):
         self.assertEquals(curriculum.consumable, None)
         self.assertEquals(curriculum.publisher, publisher)
         self.assertEquals(curriculum.created_by, user)
+
+    def test_model_review(self):
+        name = 'Test2'
+        curriculum = Curriculum.objects.get(name=CurriculumModelsTest.ID)
+        user = get_user_model().objects.create_user(
+            email='test2@test.test',
+            username=name,
+            password=name
+        )
+        user.save()
+        review = Review.objects.create(
+            curriculum=curriculum,
+            content=name,
+            rating=5,
+            user=user
+        )
+
+        self.assertEqual(list(curriculum.reviews.all()), [review])
+        self.assertEqual(list(user.reviews.all()), [review])

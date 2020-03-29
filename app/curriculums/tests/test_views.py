@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from .test_utils import create_curriculum
 from curriculums.urls import app_name
-from curriculums.models import Curriculum
+from curriculums.models import Curriculum, Sort
 
 
 class CurriculumIndexViewTest(TestCase):
@@ -27,8 +27,8 @@ class CurriculumIndexViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context[app_name]), 5)
         self.assertEqual(
-            list(response.context[app_name].order_by('id')),
-            list(curriculums.order_by('id'))
+            list(response.context[app_name]),
+            list(curriculums.order_by(Sort.Values.NEWEST.label))
         )
 
     def test_view_curriculums_lists_filter_categories(self):
@@ -62,6 +62,6 @@ class CurriculumIndexViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context[app_name]), 4)
         self.assertEqual(
-            list(response.context[app_name].order_by('id')),
-            list(curriculums)[:4]
+            list(response.context[app_name]),
+            list(curriculums.order_by(Sort.Values.NEWEST.label))[1:]
         )
