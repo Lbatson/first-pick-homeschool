@@ -26,6 +26,8 @@
                     {% include 'curriculums/radio-group.html' with name="age" list=ages filters=filters.ages %}
                 </li>
             </ul>
+            <br/>
+            <p class="text-muted">Don't see what you're looking for?<a href="{% url 'curriculums:create' %}">Submit a curriculum for review</a></p>
         </div>
         <div class="col-12 col-md-8 col-lg-9">
             <div class="row">

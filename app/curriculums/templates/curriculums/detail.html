@@ -5,6 +5,7 @@
 {% block content %}
 <h1>{{ curriculum.name }}</h1>
 <p>{{ curriculum.description }}</p>
+<a href="{% url 'curriculums:review-create' curriculum.id %}">Write a review</a>
 {% include 'curriculums/group.html' with name="categories" list=categories %}
 {% include 'curriculums/group.html' with name="subjects" list=subjects %}
 {% include 'curriculums/group.html' with name="grades" list=grades %}
