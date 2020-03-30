@@ -7,6 +7,7 @@ from django.views import generic
 from .models import (
     Curriculum,
     CurriculumForm,
+    ReviewForm,
     Category,
     Subject,
     Grade,
@@ -114,4 +115,23 @@ class CurriculumCreateView(
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class ReviewCreateView(
+    LoginRequiredMixin,
+    SuccessMessageMixin,
+    generic.CreateView
+):
+    form_class = ReviewForm
+    template_name = 'reviews/create.html'
+    success_message = 'Your review has been submitted'
+
+    def get_success_url(self):
+        c_id = self.kwargs.get('id')
+        url = f'/curriculums/{c_id}/reviews/create'
+        return super().get_success_url(url)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
         return super().form_valid(form)

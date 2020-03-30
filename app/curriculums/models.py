@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, TextInput, Textarea, Select
 from django.utils.translation import gettext_lazy as _
 
 
@@ -126,6 +126,12 @@ class CurriculumForm(ModelForm):
     class Meta:
         model = Curriculum
         fields = ['name', 'description', 'link', 'publisher']
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control'}),
+            'description': Textarea(attrs={'class': 'form-control'}),
+            'link': TextInput(attrs={'class': 'form-control'}),
+            'publisher': Select(attrs={'class': 'form-control'})
+        }
 
 
 class Review(models.Model):
@@ -158,3 +164,16 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.curriculum} - {self.rating} - {self.user.email}'
+
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ['content', 'rating']
+        labels = {
+            'content': _('Review'),
+        }
+        widgets = {
+            'content': Textarea(attrs={'class': 'form-control'}),
+            'rating': Select(attrs={'class': 'form-control'})
+        }
