@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load curriculum_extras %}
 
 {% block title %}Homeschool Reviews - Curriculums - {{ curriculum.name }}{% endblock %}
 
@@ -16,5 +17,25 @@
 {% include 'curriculums/group.html' with name="grades" list=grades %}
 {% include 'curriculums/group.html' with name="levels" list=levels %}
 {% include 'curriculums/group.html' with name="ages" list=ages %}
-{% include 'reviews/index.html' with reviews=curriculum.reviews.all %}
+
+<h3>Latest Reviews</h3>
+<div class="row my-2">
+    {% for review in reviews %}
+    <div class="col-12 col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-12">
+                        {% include 'reviews/text.html' with review=review %}
+                    </div>
+                    <div class="col-12 pt-4">
+                        <h5>Rating: {{review.rating}}</h5>
+                        {% star_rating review %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

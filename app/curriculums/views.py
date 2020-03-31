@@ -14,7 +14,8 @@ from .models import (
     Grade,
     Level,
     Age,
-    Sort
+    Sort,
+    Review
 )
 
 
@@ -93,7 +94,8 @@ def detail(request, id):
         lambda s: s.category,
         curriculum.subjects.select_related('category')
     ))
-    user_has_reviewed = curriculum.reviews.filter(user__id=request.user.id).count()
+    reviews = curriculum.reviews.order_by('-created')[:3]
+    user_has_reviewed = curriculum.reviews.filter(user__id=request.user.id).count() > 0
     context = {
         'curriculum': curriculum,
         'categories': categories,
@@ -101,7 +103,8 @@ def detail(request, id):
         'grades': curriculum.grades.all(),
         'levels': curriculum.levels.all(),
         'ages': curriculum.ages.all(),
-        'user_has_reviewed': user_has_reviewed > 0
+        'reviews': reviews,
+        'user_has_reviewed': user_has_reviewed
     }
     return render(request, 'curriculums/detail.html', context)
 
@@ -119,6 +122,23 @@ class CurriculumCreateView(
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+
+
+class ReviewsIndexView(generic.ListView):
+    model: Review
+    template_name = 'reviews/index.html'
+    context_object_name = 'reviews'
+
+    def get_queryset(self):
+        c_id = self.kwargs.get('id')
+        return Review.objects.filter(curriculum_id=c_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_has_reviewed = context['reviews'].filter(user__id=self.request.user.id).count() > 0
+        context['curriculum'] = Curriculum.objects.get(id=self.kwargs.get('id'))
+        context['user_has_reviewed'] = user_has_reviewed
+        return context
 
 
 class ReviewCreateView(
