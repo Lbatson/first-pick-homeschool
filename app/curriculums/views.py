@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.views import generic
 
 from .models import (
@@ -92,13 +93,15 @@ def detail(request, id):
         lambda s: s.category,
         curriculum.subjects.select_related('category')
     ))
+    user_has_reviewed = curriculum.reviews.filter(user__id=request.user.id).count()
     context = {
         'curriculum': curriculum,
         'categories': categories,
         'subjects': curriculum.subjects.all(),
         'grades': curriculum.grades.all(),
         'levels': curriculum.levels.all(),
-        'ages': curriculum.ages.all()
+        'ages': curriculum.ages.all(),
+        'user_has_reviewed': user_has_reviewed > 0
     }
     return render(request, 'curriculums/detail.html', context)
 
@@ -129,9 +132,10 @@ class ReviewCreateView(
 
     def get_success_url(self):
         c_id = self.kwargs.get('id')
-        url = f'/curriculums/{c_id}/reviews/create'
-        return super().get_success_url(url)
+        return reverse('curriculums:detail', kwargs={'id': c_id})
 
     def form_valid(self, form):
+        c_id = self.kwargs.get('id')
+        form.instance.curriculum = get_object_or_404(Curriculum, id=c_id)
         form.instance.user = self.request.user
         return super().form_valid(form)

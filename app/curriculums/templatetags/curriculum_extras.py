@@ -13,3 +13,11 @@ def url_replace(context, page):
     query = context['request'].GET.copy().urlencode()
     url = query.rpartition('&page=')[0] if '&page=' in query else query
     return f'{url}&page={page}'
+
+
+@register.inclusion_tag('reviews/star.html')
+def star_rating(review):
+    return {
+        'stars': range(review.rating),
+        'empty': range(5 - review.rating)
+    }

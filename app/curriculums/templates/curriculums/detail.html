@@ -5,10 +5,16 @@
 {% block content %}
 <h1>{{ curriculum.name }}</h1>
 <p>{{ curriculum.description }}</p>
-<a href="{% url 'curriculums:review-create' curriculum.id %}">Write a review</a>
+
+{% if user_has_reviewed %}
+{% else %}
+<a href="{% url 'curriculums:reviews-create' curriculum.id %}">Write a review</a>
+{% endif %}
+
 {% include 'curriculums/group.html' with name="categories" list=categories %}
 {% include 'curriculums/group.html' with name="subjects" list=subjects %}
 {% include 'curriculums/group.html' with name="grades" list=grades %}
 {% include 'curriculums/group.html' with name="levels" list=levels %}
 {% include 'curriculums/group.html' with name="ages" list=ages %}
+{% include 'reviews/index.html' with reviews=curriculum.reviews.all %}
 {% endblock %}
