@@ -1,7 +1,7 @@
 {% if messages %}
-<div class="row mt-2">
+<div class="row">
     {% for message in messages %}
-    <div {% if message.tags %} class="col-12 alert {{ message.tags }} alert-dismissible fade show" {% else %}
+    <div {% if message.tags %} class="col-12 mt-2 alert {{ message.tags }} alert-dismissible fade show" {% else %}
     class="col-12 alert alert-primary alert-dismissible fade show" {% endif %} role="alert">
         {{ message }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

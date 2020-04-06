@@ -31,6 +31,9 @@
                 {% include 'navigation.html' %}
             {% endblock navigation %}
             <div class="container">
+                {% block messages %}
+                {% include 'messages.html' %}
+                {% endblock messages %}
                 {% block content %}{% endblock content %}
             </div>
         {% endblock body %}
