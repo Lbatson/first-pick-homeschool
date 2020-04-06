@@ -6,11 +6,7 @@
 {% block content %}
 <h1>{{ curriculum.name }}</h1>
 <p>{{ curriculum.description }}</p>
-
-{% if user_has_reviewed %}
-{% else %}
-<a href="{% url 'curriculums:reviews-create' curriculum.id %}">Write a review</a>
-{% endif %}
+{% review_link curriculum %}
 
 {% include 'curriculums/group.html' with name="categories" list=categories %}
 {% include 'curriculums/group.html' with name="subjects" list=subjects %}
@@ -18,7 +14,12 @@
 {% include 'curriculums/group.html' with name="levels" list=levels %}
 {% include 'curriculums/group.html' with name="ages" list=ages %}
 
-<h3>Latest Reviews</h3>
+<div class="row my-2">
+    <div class="col-12">
+        <h3>Latest Reviews</h3>
+        <h5><a href="{% url 'curriculums:reviews' curriculum.id %}">View All</a></h6>
+    </div>
+</div>
 <div class="row my-2">
     {% for review in reviews %}
     <div class="col-12 col-md-4">

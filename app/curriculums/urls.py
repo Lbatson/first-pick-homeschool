@@ -5,7 +5,8 @@ from .views import (
     detail,
     CurriculumCreateView,
     ReviewsIndexView,
-    ReviewCreateView
+    ReviewCreateView,
+    ReviewUpdateView
 )
 
 
@@ -15,5 +16,6 @@ urlpatterns = [
     path('<int:id>/', detail, name='detail'),
     path('create/', CurriculumCreateView.as_view(), name='create'),
     path('<int:id>/reviews', ReviewsIndexView.as_view(), name='reviews'),
-    path('<int:id>/reviews/create', ReviewCreateView.as_view(), name='reviews-create')
+    path('<int:id>/reviews/create', ReviewCreateView.as_view(), name='reviews-create'),
+    path('<int:id>/reviews/<int:pk>', ReviewUpdateView.as_view(), name='reviews-update')
 ]

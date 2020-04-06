@@ -21,3 +21,13 @@ def star_rating(review):
         'stars': range(review.rating),
         'empty': range(5 - review.rating)
     }
+
+
+@register.inclusion_tag('reviews/link.html', takes_context=True)
+def review_link(context, curriculum):
+    user = context['request'].user
+    review = curriculum.reviews.filter(user__id=user.id).first() or None
+    return {
+        'curriculum': curriculum,
+        'review': review
+    }

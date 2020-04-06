@@ -95,7 +95,6 @@ def detail(request, id):
         curriculum.subjects.select_related('category')
     ))
     reviews = curriculum.reviews.order_by('-created')[:3]
-    user_has_reviewed = curriculum.reviews.filter(user__id=request.user.id).count() > 0
     context = {
         'curriculum': curriculum,
         'categories': categories,
@@ -103,8 +102,7 @@ def detail(request, id):
         'grades': curriculum.grades.all(),
         'levels': curriculum.levels.all(),
         'ages': curriculum.ages.all(),
-        'reviews': reviews,
-        'user_has_reviewed': user_has_reviewed
+        'reviews': reviews
     }
     return render(request, 'curriculums/detail.html', context)
 
@@ -135,9 +133,7 @@ class ReviewsIndexView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_has_reviewed = context['reviews'].filter(user__id=self.request.user.id).count() > 0
         context['curriculum'] = Curriculum.objects.get(id=self.kwargs.get('id'))
-        context['user_has_reviewed'] = user_has_reviewed
         return context
 
 
@@ -159,3 +155,21 @@ class ReviewCreateView(
         form.instance.curriculum = get_object_or_404(Curriculum, id=c_id)
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class ReviewUpdateView(
+    LoginRequiredMixin,
+    SuccessMessageMixin,
+    generic.UpdateView
+):
+    form_class = ReviewForm
+    template_name = 'reviews/create.html'
+    success_message = 'Your review has been updated'
+
+    def get_success_url(self):
+        c_id = self.kwargs.get('id')
+        return reverse('curriculums:detail', kwargs={'id': c_id})
+
+    def get_object(self, queryset=None):
+        get_object_or_404(Curriculum, pk=self.kwargs.get('id'))
+        return get_object_or_404(Review, pk=self.kwargs.get('pk'))

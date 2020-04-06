@@ -8,7 +8,7 @@
 
 <h1>Write a review</h1>
 
-<form action="{% url 'curriculums:reviews-create' view.kwargs.id %}" method="post">
+<form action="" method="post">
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group">

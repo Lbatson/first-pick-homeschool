@@ -5,6 +5,8 @@
 
 {% block content %}
 <h4>Reviews for <i>{{curriculum.name}}</i></h4>
+{% review_link curriculum %}
+
 {% for review in reviews %}
 <div class="row my-2">
     <div class="col-12">
@@ -17,7 +19,11 @@
                     <div class="col-12 col-md-3 col-lg-2 d-flex flex-column">
                         <h5>Rating: {{review.rating}}</h5>
                         {% star_rating review %}
-                        <p class="mt-2 mb-0">Was this review helpful? Yes No</p>
+                        <p class="mt-2 mb-0">
+                            <span class="text-muted">Was this review helpful?</span>
+                            <i class="mx-1 fa fa-thumbs-o-up" aria-hidden="true"></i>
+                            <span class="text-muted">or</span>
+                            <i class="mx-1 fa fa-thumbs-o-down" aria-hidden="true"></i></p>
                     </div>
                 </div>
             </div>
