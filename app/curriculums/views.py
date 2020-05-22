@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 
@@ -155,6 +155,15 @@ class ReviewCreateView(
         form.instance.curriculum = get_object_or_404(Curriculum, id=c_id)
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def render_to_response(self, context, **response_kwargs):
+        c_id = self.kwargs.get('id')
+        curriculum = get_object_or_404(Curriculum, id=c_id)
+        user = self.request.user
+        review = curriculum.reviews.filter(user__id=user.id).first() or None
+        if review:
+            return redirect('curriculums:reviews-update', id=c_id, pk=review.id)
+        return super().render_to_response(context, **response_kwargs)
 
 
 class ReviewUpdateView(
