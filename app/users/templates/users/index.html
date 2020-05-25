@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load curriculum_extras %}
+
+{% block title %}HomeSchool Reviews - User Profile - {{object.username}}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h3>{{ object.username }}</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        {% if reviews %}
+        <h3>Latest Reviews</h3>
+        <h5><a href="{% url 'users:index' object.id %}">View All</a></h6>
+        {% else %}
+        <p>No Reviews</p>
+        {% endif %}
+    </div>
+</div>
+<div class="row my-2">
+{% for review in reviews %}
+    {% include 'reviews/card.html' with review=review detail=review.curriculum %}
+{% endfor %}
+</div>
+{% endblock %}

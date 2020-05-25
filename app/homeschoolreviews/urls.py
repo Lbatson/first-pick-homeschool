@@ -21,7 +21,8 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('curriculums/', include('curriculums.urls'))
+    path('curriculums/', include('curriculums.urls')),
+    path('users/', include('users.urls'))
 ]
 
 if settings.DEBUG:

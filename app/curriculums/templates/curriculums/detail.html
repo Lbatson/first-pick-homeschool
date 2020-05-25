@@ -21,22 +21,8 @@
     </div>
 </div>
 <div class="row my-2">
-    {% for review in reviews %}
-    <div class="col-12 col-md-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-12">
-                        {% include 'reviews/text.html' with review=review %}
-                    </div>
-                    <div class="col-12 pt-4">
-                        <h5>Rating: {{review.rating}}</h5>
-                        {% star_rating review %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
+{% for review in reviews %}
+    {% include 'reviews/card.html' with review=review %}
+{% endfor %}
 </div>
 {% endblock %}

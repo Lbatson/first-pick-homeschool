@@ -1,6 +1,8 @@
 <p class="{% if not review.content %}text-muted{% endif %}">{{review.content|default:"No Content"}}</p>
 <blockquote class="blockquote mb-0">
     <footer class="blockquote-footer">
-        <cite title="{{review.user.username}}">{{review.user.username}}</cite>
+        <cite title="{{review.user.username}}">
+            <a href="{% url 'users:index' review.user.id %}">{{review.user.username}}</a>
+        </cite>
     </footer>
 </blockquote>

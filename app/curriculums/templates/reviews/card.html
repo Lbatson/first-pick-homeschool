@@ -1,0 +1,28 @@
+{% load curriculum_extras %}
+
+<div class="col-12 col-md-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if detail %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h5><a href="{% url 'curriculums:detail' detail.id %}">{{detail}}</a></h5>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-12 text-center">
+                    {% include 'reviews/text.html' with review=review %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 pt-4 text-center">
+                    <h5>Rating: {{review.rating}}</h5>
+                    {% star_rating review %}
+                    {# TODO: Add review ranking based on feedback #}
+                    {# {% include 'reviews/helpful.html' %} #}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
