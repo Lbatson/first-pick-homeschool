@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
+from django.db.models import Avg, Q
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
@@ -102,7 +102,8 @@ def detail(request, id):
         'grades': curriculum.grades.all(),
         'levels': curriculum.levels.all(),
         'ages': curriculum.ages.all(),
-        'reviews': reviews
+        'reviews': reviews,
+        'rating': reviews.aggregate(Avg('rating'))['rating__avg']
     }
     return render(request, 'curriculums/detail.html', context)
 
