@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Avg, Q
+from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
@@ -51,7 +52,7 @@ class CurriculumIndexView(generic.ListView):
         if filters['ages']:
             query.add(Q(ages__id__in=filters['ages']), Q.AND)
 
-        return Curriculum.objects.filter(query).distinct().order_by(order)
+        return Curriculum.objects.annotate(avg_rating=Coalesce(Avg('reviews__rating'), 0.0)).filter(query).distinct().order_by(order)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -103,7 +104,7 @@ def detail(request, id):
         'levels': curriculum.levels.all(),
         'ages': curriculum.ages.all(),
         'reviews': reviews,
-        'rating': reviews.aggregate(Avg('rating'))['rating__avg']
+        'avg_rating': reviews.aggregate(avg_rating=Coalesce(Avg('rating'), 0.0))['avg_rating']
     }
     return render(request, 'curriculums/detail.html', context)
 
