@@ -135,7 +135,7 @@ class ReviewsIndexView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['curriculum'] = Curriculum.objects.get(id=self.kwargs.get('id'))
+        context['curriculum'] = get_object_or_404(Curriculum, id=self.kwargs.get('id'))
         return context
 
 

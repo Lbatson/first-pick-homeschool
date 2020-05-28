@@ -13,7 +13,7 @@
     <div class="col-12">
         {% if reviews %}
         <h3>Latest Reviews</h3>
-        <h5><a href="{% url 'users:index' object.id %}">View All</a></h6>
+        <h5><a href="{% url 'users:reviews' object.id %}">View All</a></h6>
         {% else %}
         <p>No Reviews</p>
         {% endif %}

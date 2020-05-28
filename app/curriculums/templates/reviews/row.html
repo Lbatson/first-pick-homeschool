@@ -4,15 +4,9 @@
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-body">
-                {% if detail %}
-                <div class="row">
-                    <div class="col-12">
-                        <h5><a href="{% url 'curriculums:detail' detail.id %}">{{detail}}</a></h5>
-                    </div>
-                </div>
-                {% endif %}
                 <div class="row">
                     <div class="col-12 col-md-9 col-lg-10">
+                        {% if detail %}<h5><a href="{% url 'curriculums:detail' detail.id %}">{{detail}}</a></h5>{% endif %}
                         {% include 'reviews/text.html' with review=review %}
                     </div>
                     <div class="col-12 col-md-3 col-lg-2 d-flex flex-column">
