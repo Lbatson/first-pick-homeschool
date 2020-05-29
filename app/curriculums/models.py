@@ -43,6 +43,13 @@ class Age(models.Model):
         return self.name
 
 
+class ReligiousPreference(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
 class Publisher(models.Model):
     name = models.CharField(max_length=100)
     link = models.URLField(max_length=200)
@@ -70,12 +77,6 @@ class Sort():
 
 
 class Curriculum(models.Model):
-
-    class ReligiousPreference(models.TextChoices):
-        RELIGIOUS = 'R', _('Religious')
-        NEUTRAL = 'N', _('Faith Neutral')
-        SECULAR = 'S', _('Secular')
-
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=2000)
     link = models.URLField(max_length=200)
@@ -83,10 +84,11 @@ class Curriculum(models.Model):
     subjects = models.ManyToManyField(Subject, related_name='curriculums')
     grades = models.ManyToManyField(Grade, related_name='curriculums')
     ages = models.ManyToManyField(Age, related_name='curriculums')
-    religious_preference = models.CharField(
-        max_length=1,
+    religious_preference = models.ForeignKey(
+        ReligiousPreference,
         null=True,
-        choices=ReligiousPreference.choices
+        on_delete=models.SET_NULL,
+        related_name='curriculums'
     )
     publisher = models.ForeignKey(
         Publisher,

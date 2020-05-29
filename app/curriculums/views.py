@@ -14,6 +14,7 @@ from .models import (
     Subject,
     Grade,
     Age,
+    ReligiousPreference,
     Sort,
     Review
 )
@@ -48,6 +49,9 @@ class CurriculumIndexView(generic.ListView):
         if filters['ages']:
             query.add(Q(ages__id__in=filters['ages']), Q.AND)
 
+        if filters['preference']:
+            query.add(Q(religious_preference__id__in=filters['preference']), Q.AND)
+
         return Curriculum.objects.annotate(avg_rating=Coalesce(Avg('reviews__rating'), 0.0)).filter(query).distinct().order_by(order)
 
     def get_context_data(self, **kwargs):
@@ -59,6 +63,7 @@ class CurriculumIndexView(generic.ListView):
         context['subjects'] = list(Subject.objects.all())
         context['grades'] = list(Grade.objects.all())
         context['ages'] = list(Age.objects.all())
+        context['preference'] = list(ReligiousPreference.objects.all())
         return context
 
     def get_filters(self):
@@ -72,7 +77,8 @@ class CurriculumIndexView(generic.ListView):
             'categories': get_selections('category'),
             'subjects': get_selections('subject'),
             'grades': get_selections('grade'),
-            'ages': get_selections('age')
+            'ages': get_selections('age'),
+            'preference': get_selections('preference')
         }
 
     def get_sort(self):

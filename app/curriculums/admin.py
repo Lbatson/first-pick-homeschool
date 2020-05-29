@@ -6,6 +6,7 @@ from .models import (
     Subject,
     Grade,
     Age,
+    ReligiousPreference,
     Publisher
 )
 
@@ -39,3 +40,4 @@ admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Category)
 admin.site.register(Grade)
 admin.site.register(Age)
+admin.site.register(ReligiousPreference)

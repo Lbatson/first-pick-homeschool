@@ -19,10 +19,11 @@
         <div class="col-12 col-md-4 col-lg-3">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    {% include 'curriculums/radio-group.html' with name="category" list=categories filters=filters.categories %}
-                    {% include 'curriculums/radio-group.html' with name="subject" list=subjects filters=filters.subjects %}
-                    {% include 'curriculums/radio-group.html' with name="grade" list=grades filters=filters.grades %}
-                    {% include 'curriculums/radio-group.html' with name="age" list=ages filters=filters.ages %}
+                    {% include 'curriculums/radio-group.html' with title="category" name="category" list=categories filters=filters.categories %}
+                    {% include 'curriculums/radio-group.html' with title="subject" name="subject" list=subjects filters=filters.subjects %}
+                    {% include 'curriculums/radio-group.html' with title="grade" name="grade" list=grades filters=filters.grades %}
+                    {% include 'curriculums/radio-group.html' with title="age" name="age" list=ages filters=filters.ages %}
+                    {% include 'curriculums/radio-group.html' with title="religious preference" name="preference" list=preference filters=filters.preference %}
                 </li>
             </ul>
             <br/>
