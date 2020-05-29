@@ -6,7 +6,6 @@ from curriculums.models import (
     Category,
     Subject,
     Grade,
-    Level,
     Age,
     Publisher,
     Curriculum,
@@ -39,7 +38,6 @@ class CurriculumModelsTest(TestCase):
         curriculum = Curriculum.objects.get(name=CurriculumModelsTest.ID)
         subject = Subject.objects.get(name=CurriculumModelsTest.ID)
         grade = Grade.objects.get(name=CurriculumModelsTest.ID)
-        level = Level.objects.get(name=CurriculumModelsTest.ID)
         age = Age.objects.get(name=CurriculumModelsTest.ID)
         publisher = Publisher.objects.get(name=CurriculumModelsTest.ID)
         user = get_user_model().objects.get(username=CurriculumModelsTest.ID)
@@ -48,7 +46,6 @@ class CurriculumModelsTest(TestCase):
         self.assertEquals(curriculum.is_confirmed, False)
         self.assertEquals(list(curriculum.subjects.all()), [subject])
         self.assertEquals(list(curriculum.grades.all()), [grade])
-        self.assertEquals(list(curriculum.levels.all()), [level])
         self.assertEquals(list(curriculum.ages.all()), [age])
         self.assertEquals(curriculum.price, 0.00)
         self.assertEquals(curriculum.subscription, False)

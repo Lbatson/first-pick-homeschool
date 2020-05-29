@@ -4,7 +4,6 @@ from curriculums.models import (
     Category,
     Subject,
     Grade,
-    Level,
     Age,
     Publisher,
     Curriculum
@@ -15,7 +14,6 @@ def create_curriculum(name):
     category = Category.objects.create(name=name)
     subject = Subject.objects.create(name=name, category=category)
     grade = Grade.objects.create(name=name)
-    level = Level.objects.create(name=name)
     age = Age.objects.create(name=name)
     publisher = Publisher.objects.create(name=name)
     user = get_user_model().objects.create_user(
@@ -33,6 +31,5 @@ def create_curriculum(name):
     )
     curriculum.subjects.add(subject)
     curriculum.grades.add(grade)
-    curriculum.levels.add(level)
     curriculum.ages.add(age)
     return curriculum

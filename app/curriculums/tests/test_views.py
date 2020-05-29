@@ -43,10 +43,9 @@ class CurriculumIndexViewTest(TestCase):
     def test_view_curriculums_lists_filter_multiple_params(self):
         curriculum = Curriculum.objects.get(name=1)
         grade = curriculum.grades.all().first().id
-        level = curriculum.levels.all().first().id
         age = curriculum.ages.all().first().id
         response = self.client.get(
-            f'/{app_name}/?grade={grade}&level={level}&age={age}'
+            f'/{app_name}/?grade={grade}&age={age}'
         )
 
         self.assertEqual(response.status_code, 200)

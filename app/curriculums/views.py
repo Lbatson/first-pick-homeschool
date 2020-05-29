@@ -13,7 +13,6 @@ from .models import (
     Category,
     Subject,
     Grade,
-    Level,
     Age,
     Sort,
     Review
@@ -46,9 +45,6 @@ class CurriculumIndexView(generic.ListView):
         if filters['grades']:
             query.add(Q(grades__id__in=filters['grades']), Q.AND)
 
-        if filters['levels']:
-            query.add(Q(levels__id__in=filters['levels']), Q.AND)
-
         if filters['ages']:
             query.add(Q(ages__id__in=filters['ages']), Q.AND)
 
@@ -62,7 +58,6 @@ class CurriculumIndexView(generic.ListView):
         context['categories'] = list(Category.objects.all())
         context['subjects'] = list(Subject.objects.all())
         context['grades'] = list(Grade.objects.all())
-        context['levels'] = list(Level.objects.all())
         context['ages'] = list(Age.objects.all())
         return context
 
@@ -77,7 +72,6 @@ class CurriculumIndexView(generic.ListView):
             'categories': get_selections('category'),
             'subjects': get_selections('subject'),
             'grades': get_selections('grade'),
-            'levels': get_selections('level'),
             'ages': get_selections('age')
         }
 
@@ -101,7 +95,6 @@ def detail(request, id):
         'categories': categories,
         'subjects': curriculum.subjects.all(),
         'grades': curriculum.grades.all(),
-        'levels': curriculum.levels.all(),
         'ages': curriculum.ages.all(),
         'reviews': reviews,
         'avg_rating': reviews.aggregate(avg_rating=Coalesce(Avg('rating'), 0.0))['avg_rating']

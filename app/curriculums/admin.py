@@ -5,7 +5,6 @@ from .models import (
     Category,
     Subject,
     Grade,
-    Level,
     Age,
     Publisher
 )
@@ -19,7 +18,6 @@ class CurriculumAdmin(admin.ModelAdmin):
         'subjects__category',
         'subjects',
         'grades',
-        'levels',
         'ages'
     )
 
@@ -40,5 +38,4 @@ admin.site.register(Publisher, PublisherAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Category)
 admin.site.register(Grade)
-admin.site.register(Level)
 admin.site.register(Age)
