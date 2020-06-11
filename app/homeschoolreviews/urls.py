@@ -17,8 +17,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
+from .views import robots_txt
+
 urlpatterns = [
     path('', include('blog.urls')),
+    path('robots.txt', robots_txt),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('curriculums/', include('curriculums.urls')),
