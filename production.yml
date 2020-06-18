@@ -1,0 +1,9 @@
+# docker-compose build -f production.yml -e ENV=test/production
+version: '3.8'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    image: 278336586285.dkr.ecr.us-east-2.amazonaws.com/fphs-${ENV}:latest

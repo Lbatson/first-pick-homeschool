@@ -1,0 +1,63 @@
+# docker-compose -f local.yml up -d 
+version: '3.8'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: fphs_django
+    container_name: fphs_django
+    depends_on:
+      - postgres
+      - mailhog
+    volumes:
+      - .:/app
+    ports:
+      - "80:8000"
+    env_file:
+      - ./.envs/.local/.django.env
+      - ./.envs/.local/.postgres.env
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/local/postgres/Dockerfile
+    image: fphs_postgres 
+    container_name: fphs_postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.envs/.local/.postgres.env
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    container_name: fphs_mailhog
+    ports:
+      - "8025:8025"
+
+  node:
+    build:
+      context: .
+      dockerfile: ./compose/local/node/Dockerfile
+    image: fphs_node
+    container_name: fphs_node
+    depends_on:
+      - django
+    volumes:
+      - .:/app
+      # http://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+      # Expose browsersync UI: https://www.browsersync.io/docs/options/#option-ui
+      - "3001:3001"
+    command: npm run dev
