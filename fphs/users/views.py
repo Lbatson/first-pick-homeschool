@@ -43,25 +43,30 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserProfileView(DetailView):
     model = User
-    template_name = 'users/index.html'
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    template_name = "users/profile.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['reviews'] = Review.objects.filter(user__id=self.object.id).order_by('-created')[:3]
+        context["reviews"] = Review.objects.filter(user__username=self.object.username).order_by("-created")[:3]
         return context
 
 
-class UserReviewsIndexView(ListView):
+class UserReviewsListView(ListView):
     model = Review
-    template_name = 'users/list.html'
-    context_object_name = 'reviews'
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    template_name = "users/list.html"
+    context_object_name = "reviews"
+    user = None
 
     def get_queryset(self):
-        u_id = self.kwargs.get('pk')
-        return Review.objects.filter(user_id=u_id)
+        username = self.kwargs.get("username")
+        self.user = get_object_or_404(User, username=username)
+        return Review.objects.filter(user_id=self.user.id)
 
     def get_context_data(self, **kwargs):
-        u_id = self.kwargs.get('pk')
         context = super().get_context_data(**kwargs)
-        context['user'] = get_object_or_404(User, id=u_id)
+        context["user"] = self.user
         return context
