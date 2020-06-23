@@ -146,6 +146,10 @@ CSRF_COOKIE_HTTPONLY = True
 SECURE_BROWSER_XSS_FILTER = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = "DENY"
+# django-recaptcha  https://github.com/praekelt/django-recaptcha#installation
+# ------------------------------------------------------------------------------
+RECAPTCHA_PUBLIC_KEY = env.str("DJANGO_RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = env.str("DJANGO_RECAPTCHA_PRIVATE_KEY")
 
 
 # URLS
@@ -174,13 +178,15 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.google"
+    "allauth.socialaccount.providers.google",
+    "captcha"
 ]
 
 LOCAL_APPS = [
     "fphs.users.apps.UsersConfig",
     # Your stuff: custom apps go here
-    "fphs.curriculums"
+    "fphs.curriculums.apps.CurriculumsConfig",
+    "fphs.utils.apps.UtilsConfig"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -207,7 +213,7 @@ LOGIN_REDIRECT_URL = "users:redirect"
 LOGIN_URL = "account_login"
 # django-allauth
 # ------------------------------------------------------------------------------
-ACCOUNT_ALLOW_REGISTRATION = True 
+ACCOUNT_ALLOW_REGISTRATION = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
@@ -292,6 +298,7 @@ FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_FAIL_SILENTLY = not DEBUG
 
 
 # FIXTURES

@@ -6,7 +6,7 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
-from fphs.utils.views import robots_txt
+from fphs.utils.views import robots_txt, ContactView
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -22,7 +22,7 @@ urlpatterns = [
         TemplateView.as_view(template_name="pages/legal/terms-of-service.html"),
         name="terms_of_service"
     ),
-    path("contact/", TemplateView.as_view(template_name="pages/contact.html"), name="contact"),
+    path("contact/", ContactView.as_view(), name="contact"),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
