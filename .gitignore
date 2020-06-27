@@ -157,7 +157,8 @@ typings/
 !.vscode/extensions.json
 
 
-
+### Intellij
+.idea/
 
 
 ### Windows template
