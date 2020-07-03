@@ -10,7 +10,7 @@ from fphs.curriculums.models import (
     ReligiousPreference,
     Publisher,
     Curriculum,
-    Review
+    Review,
 )
 
 
@@ -25,8 +25,8 @@ class CurriculumModelsTest(TestCase):
         category = Category.objects.get(name=CurriculumModelsTest.ID)
 
         self.assertIsInstance(category, Category)
-        self.assertEquals(category._meta.verbose_name, 'Category')
-        self.assertEquals(category._meta.verbose_name_plural, 'Categories')
+        self.assertEquals(category._meta.verbose_name, "Category")
+        self.assertEquals(category._meta.verbose_name_plural, "Categories")
 
     def test_model_subject(self):
         category = Category.objects.get(name=CurriculumModelsTest.ID)
@@ -40,9 +40,13 @@ class CurriculumModelsTest(TestCase):
         subject = Subject.objects.get(name=CurriculumModelsTest.ID)
         grade = Grade.objects.get(name=CurriculumModelsTest.ID)
         age = Age.objects.get(name=CurriculumModelsTest.ID)
-        religious_preference = ReligiousPreference.objects.get(name=CurriculumModelsTest.ID)
+        religious_preference = ReligiousPreference.objects.get(
+            name=CurriculumModelsTest.ID
+        )
         publisher = Publisher.objects.get(name=CurriculumModelsTest.ID)
-        user = get_user_model().objects.get(username=f"username{CurriculumModelsTest.ID}")
+        user = get_user_model().objects.get(
+            username=f"username{CurriculumModelsTest.ID}"
+        )
 
         self.assertIsInstance(curriculum, Curriculum)
         self.assertEquals(curriculum.is_confirmed, False)
@@ -54,19 +58,16 @@ class CurriculumModelsTest(TestCase):
         self.assertEquals(curriculum.created_by, user)
 
     def test_model_review(self):
-        name = 'Test2'
+        name = "Test2"
         curriculum = Curriculum.objects.get(name=CurriculumModelsTest.ID)
         user = get_user_model().objects.create_user(
-            email='test2@test.test',
+            email="test2@test.test",
             username=f"username{name}",
-            password=f"password{name}"
+            password=f"password{name}",
         )
         user.save()
         review = Review.objects.create(
-            curriculum=curriculum,
-            content=name,
-            rating=5,
-            user=user
+            curriculum=curriculum, content=name, rating=5, user=user
         )
 
         self.assertEqual(list(curriculum.reviews.all()), [review])

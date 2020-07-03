@@ -118,7 +118,7 @@ SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD")
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF")
 
 
-# PERFORMANCE 
+# PERFORMANCE
 # ------------------------------------------------------------------------------
 # django-compressor
 # ------------------------------------------------------------------------------

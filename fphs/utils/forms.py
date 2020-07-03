@@ -15,9 +15,6 @@ class ContactForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            "email",
-            "message",
-            "captcha",
-            Submit("submit", "Send Message")
+            "email", "message", "captcha", Submit("submit", "Send Message")
         )
         self.fields["captcha"].label = False

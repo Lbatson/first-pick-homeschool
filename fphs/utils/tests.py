@@ -5,16 +5,10 @@ from django.test import TestCase
 
 class RobotsTxtTests(TestCase):
     def test_get_robot_txt(self):
-        self._assert_robot_txt_by_domain(
-            "firstpickhomeschool.com",
-            "Disallow: /admin"
-        )
+        self._assert_robot_txt_by_domain("firstpickhomeschool.com", "Disallow: /admin")
 
     def test_get_robot_txt_subdomain(self):
-        self._assert_robot_txt_by_domain(
-            "test.firstpickhomeschool.com",
-            "Disallow: /"
-        )
+        self._assert_robot_txt_by_domain("test.firstpickhomeschool.com", "Disallow: /")
 
     def test_post_robot_txt_disallowed(self):
         response = self.client.post("/robots.txt")

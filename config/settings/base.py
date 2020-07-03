@@ -56,9 +56,7 @@ MANAGERS = ADMINS
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    "default": env.db("DJANGO_DB")
-}
+DATABASES = {"default": env.db("DJANGO_DB")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["CONN_MAX_AGE"] = 60
 
@@ -66,9 +64,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = 60
 # CACHES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = {
-    "default": env.cache_url("DJANGO_CACHE")
-}
+CACHES = {"default": env.cache_url("DJANGO_CACHE")}
 # Mimicing memcache behavior.
 # http://jazzband.github.io/django-redis/latest/#_memcached_exceptions_behavior
 CACHES["default"]["OPTIONS"]["IGNORE_EXCEPTIONS"] = True
@@ -179,14 +175,14 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
-    "captcha"
+    "captcha",
 ]
 
 LOCAL_APPS = [
     "fphs.users.apps.UsersConfig",
     # Your stuff: custom apps go here
     "fphs.curriculums.apps.CurriculumsConfig",
-    "fphs.utils.apps.UtilsConfig"
+    "fphs.utils.apps.UtilsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -238,7 +234,9 @@ PASSWORD_HASHERS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},

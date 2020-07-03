@@ -7,36 +7,53 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('curriculums', '0003_curriculum_link'),
+        ("curriculums", "0003_curriculum_link"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Publisher',
+            name="Publisher",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('link', models.URLField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("link", models.URLField()),
             ],
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='consumable',
-            field=models.CharField(choices=[('Y', 'Yes'), ('N', 'No'), ('M', 'Mixed')], max_length=1, null=True),
+            model_name="curriculum",
+            name="consumable",
+            field=models.CharField(
+                choices=[("Y", "Yes"), ("N", "No"), ("M", "Mixed")],
+                max_length=1,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='price',
+            model_name="curriculum",
+            name="price",
             field=models.DecimalField(decimal_places=2, default=0.0, max_digits=8),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='subscription',
+            model_name="curriculum",
+            name="subscription",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='publisher',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='curriculums', to='curriculums.Publisher'),
+            model_name="curriculum",
+            name="publisher",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="curriculums",
+                to="curriculums.Publisher",
+            ),
         ),
     ]

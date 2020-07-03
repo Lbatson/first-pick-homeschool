@@ -5,7 +5,7 @@ from fphs.users.views import (
     UserRedirectView,
     UserUpdateView,
     UserProfileView,
-    UserReviewsListView
+    UserReviewsListView,
 )
 
 app_name = "users"
@@ -14,5 +14,5 @@ urlpatterns = [
     path("~update/", view=UserUpdateView.as_view(), name="update"),
     path("<str:username>/", view=UserDetailView.as_view(), name="detail"),
     path("<str:username>/profile", UserProfileView.as_view(), name="profile"),
-    path("<str:username>/reviews", UserReviewsListView.as_view(), name="reviews")
+    path("<str:username>/reviews", UserReviewsListView.as_view(), name="reviews"),
 ]

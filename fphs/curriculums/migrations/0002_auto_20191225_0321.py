@@ -6,68 +6,118 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('curriculums', '0001_initial'),
+        ("curriculums", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Age',
+            name="Age",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=3)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=3)),
             ],
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
             ],
         ),
         migrations.CreateModel(
-            name='Grade',
+            name="Grade",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=20)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=20)),
             ],
         ),
         migrations.CreateModel(
-            name='Level',
+            name="Level",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=20)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=20)),
             ],
         ),
         migrations.CreateModel(
-            name='Subject',
+            name="Subject",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
             ],
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='ages',
-            field=models.ManyToManyField(related_name='curriculums', to='curriculums.Age'),
+            model_name="curriculum",
+            name="ages",
+            field=models.ManyToManyField(
+                related_name="curriculums", to="curriculums.Age"
+            ),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='categories',
-            field=models.ManyToManyField(related_name='curriculums', to='curriculums.Category'),
+            model_name="curriculum",
+            name="categories",
+            field=models.ManyToManyField(
+                related_name="curriculums", to="curriculums.Category"
+            ),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='grades',
-            field=models.ManyToManyField(related_name='curriculums', to='curriculums.Grade'),
+            model_name="curriculum",
+            name="grades",
+            field=models.ManyToManyField(
+                related_name="curriculums", to="curriculums.Grade"
+            ),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='levels',
-            field=models.ManyToManyField(related_name='curriculums', to='curriculums.Level'),
+            model_name="curriculum",
+            name="levels",
+            field=models.ManyToManyField(
+                related_name="curriculums", to="curriculums.Level"
+            ),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='subjects',
-            field=models.ManyToManyField(related_name='curriculums', to='curriculums.Subject'),
+            model_name="curriculum",
+            name="subjects",
+            field=models.ManyToManyField(
+                related_name="curriculums", to="curriculums.Subject"
+            ),
         ),
     ]

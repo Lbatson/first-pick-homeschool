@@ -7,7 +7,7 @@ from fphs.curriculums.models import (
     Age,
     ReligiousPreference,
     Publisher,
-    Curriculum
+    Curriculum,
 )
 
 
@@ -19,18 +19,16 @@ def create_curriculum(name):
     religious_preference = ReligiousPreference.objects.create(name=name)
     publisher = Publisher.objects.create(name=name)
     user = get_user_model().objects.create_user(
-        email='test@test.test',
-        username=f"username{name}",
-        password=f"password{name}"
+        email="test@test.test", username=f"username{name}", password=f"password{name}"
     )
     user.save()
     curriculum = Curriculum.objects.create(
         name=name,
-        description='description',
-        link='http://localhost',
+        description="description",
+        link="http://localhost",
         religious_preference=religious_preference,
         publisher=publisher,
-        created_by=user
+        created_by=user,
     )
     curriculum.subjects.add(subject)
     curriculum.grades.add(grade)

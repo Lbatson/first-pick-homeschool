@@ -7,22 +7,29 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('curriculums', '0006_auto_20200104_0004'),
+        ("curriculums", "0006_auto_20200104_0004"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='curriculum',
-            name='categories',
+        migrations.RemoveField(model_name="curriculum", name="categories",),
+        migrations.AddField(
+            model_name="curriculum",
+            name="format",
+            field=models.CharField(
+                choices=[("R", "Resource"), ("T", "Textbook"), ("W", "Workbook")],
+                max_length=1,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='curriculum',
-            name='format',
-            field=models.CharField(choices=[('R', 'Resource'), ('T', 'Textbook'), ('W', 'Workbook')], max_length=1, null=True),
-        ),
-        migrations.AddField(
-            model_name='subject',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subjects', to='curriculums.Category'),
+            model_name="subject",
+            name="category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="subjects",
+                to="curriculums.Category",
+            ),
         ),
     ]
