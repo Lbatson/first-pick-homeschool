@@ -5,22 +5,23 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
-
 from fphs.utils.views import robots_txt, ContactView
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path("robots.txt", robots_txt, name="robots"),
-    path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
+    path(
+        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
+    ),
     path(
         "legal/privacy-policy/",
         TemplateView.as_view(template_name="pages/legal/privacy-policy.html"),
-        name="privacy_policy"
+        name="privacy_policy",
     ),
     path(
         "legal/terms-of-service/",
         TemplateView.as_view(template_name="pages/legal/terms-of-service.html"),
-        name="terms_of_service"
+        name="terms_of_service",
     ),
     path("contact/", ContactView.as_view(), name="contact"),
     # Django Admin, use {% url 'admin:index' %}
