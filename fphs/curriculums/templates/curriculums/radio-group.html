@@ -5,10 +5,10 @@
 <div class="collapse {% if filtered %} show {% endif %}" id="{{ name }}-collapse">
     <div class="form-group">
         {% for item in list %}
-        <div class="form-check">
-            <input class="form-check-input" name="{{ name }}" type="checkbox" value="{{ item.id }}"  {% if item.id in filters %} checked {% endif %}>
-            <label class="form-check-label" for="{{ item.name }}-{{ item.id }}">{{ item }}</label>
-        </div>
+            <div class="form-check">
+                <input class="form-check-input" name="{{ name }}" type="checkbox" value="{{ item.id }}"  {% if item.id in filters %} checked {% endif %}>
+                <label class="form-check-label" for="{{ item.name }}-{{ item.id }}">{{ item }}</label>
+            </div>
         {% endfor %}
     </div>
 </div>

@@ -4,10 +4,10 @@
 {% block title %}Homeschool Reviews - Reviews for {{curriculum.name}}{% endblock title %}
 
 {% block content %}
-<h4>Reviews for <i>{{curriculum.name}}</i></h4>
-{% review_link curriculum %}
+    <h4>Reviews for <i>{{curriculum.name}}</i></h4>
+    {% review_link curriculum %}
 
-{% for review in reviews %}
-    {% include 'reviews/row.html' with review=review %}
-{% endfor %}
+    {% for review in reviews %}
+        {% include 'reviews/row.html' with review=review %}
+    {% endfor %}
 {% endblock content %}

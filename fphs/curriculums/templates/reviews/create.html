@@ -4,21 +4,21 @@
 
 {% block content %}
 
-{% include 'messages.html' %}
+    {% include 'messages.html' %}
 
-<h1>{% if review.id %}Edit your review{% else %}Write a review{% endif %}</h1>
+    <h1>{% if review.id %}Edit your review{% else %}Write a review{% endif %}</h1>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {% for field in form %}
-    <div class="form-group">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }} 
-        {% if field.help_text %}
-        <p class="help">{{ field.help_text|safe }}</p>
-        {% endif %}
-    </div>
-    {% endfor %}
-    <input class="btn btn-primary" type="submit" value="Submit">
-</form>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }}
+                {{ field.label_tag }} {{ field }}
+                {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
 {% endblock %}

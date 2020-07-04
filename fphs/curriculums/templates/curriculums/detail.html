@@ -4,25 +4,25 @@
 {% block title %}Homeschool Reviews - Curriculums - {{ curriculum.name }}{% endblock %}
 
 {% block content %}
-<h1>{{ curriculum.name }}</h1>
-<p>{{ curriculum.description }}</p>
-<h4>Rating: {{ avg_rating }}</h4>
-{% review_link curriculum %}
+    <h1>{{ curriculum.name }}</h1>
+    <p>{{ curriculum.description }}</p>
+    <h4>Rating: {{ avg_rating }}</h4>
+    {% review_link curriculum %}
 
-{% include 'curriculums/group.html' with name="categories" list=categories %}
-{% include 'curriculums/group.html' with name="subjects" list=subjects %}
-{% include 'curriculums/group.html' with name="grades" list=grades %}
-{% include 'curriculums/group.html' with name="ages" list=ages %}
+    {% include 'curriculums/group.html' with name="categories" list=categories %}
+    {% include 'curriculums/group.html' with name="subjects" list=subjects %}
+    {% include 'curriculums/group.html' with name="grades" list=grades %}
+    {% include 'curriculums/group.html' with name="ages" list=ages %}
 
-<div class="row my-2">
-    <div class="col-12">
-        <h3>Latest Reviews</h3>
-        <h5><a href="{% url 'curriculums:reviews' curriculum.id %}">View All</a></h6>
+    <div class="row my-2">
+        <div class="col-12">
+            <h3>Latest Reviews</h3>
+            <h5><a href="{% url 'curriculums:reviews' curriculum.id %}">View All</a></h6>
+        </div>
     </div>
-</div>
-<div class="row my-2">
-{% for review in reviews %}
-    {% include 'reviews/card.html' with review=review %}
-{% endfor %}
-</div>
+    <div class="row my-2">
+        {% for review in reviews %}
+            {% include 'reviews/card.html' with review=review %}
+        {% endfor %}
+    </div>
 {% endblock %}

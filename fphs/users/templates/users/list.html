@@ -3,9 +3,9 @@
 {% block title %}Homeschool Reviews - Reviews for {{ user.username }}{% endblock title %}
 
 {% block content %}
-<h4>Reviews for <i>{{ user.username }}</i></h4>
+    <h4>Reviews for <i>{{ user.username }}</i></h4>
 
-{% for review in reviews %}
-    {% include 'reviews/row.html' with review=review detail=review.curriculum %}
-{% endfor %}
+    {% for review in reviews %}
+        {% include 'reviews/row.html' with review=review detail=review.curriculum %}
+    {% endfor %}
 {% endblock content %}
