@@ -67,7 +67,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = 60
 CACHES = {"default": env.cache_url("DJANGO_CACHE")}
 # Mimicing memcache behavior.
 # http://jazzband.github.io/django-redis/latest/#_memcached_exceptions_behavior
-CACHES["default"]["OPTIONS"]["IGNORE_EXCEPTIONS"] = True
+# CACHES["default"]["OPTIONS"]["IGNORE_EXCEPTIONS"] = True -- added as part of environment variable
 
 
 # EMAIL
