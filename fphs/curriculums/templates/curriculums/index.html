@@ -52,7 +52,12 @@
                                         <div class="media-body">
                                             <h5><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></h5>
                                             <p>{{ curriculum.description }}</p>
-                                            <h6>Rating: {{ curriculum.avg_rating }}</h6>
+                                            {% if curriculum.avg_rating > 0 %}
+                                                <h6>Rating: {{ curriculum.avg_rating }}</h6>
+                                                {% star_rating curriculum.avg_rating %}
+                                            {% else %}
+                                                No reviews
+                                            {% endif %}
                                         </div>
                                     </li>
                                 {% endfor %}

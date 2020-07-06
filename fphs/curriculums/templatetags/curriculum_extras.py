@@ -16,8 +16,11 @@ def url_replace(context, page):
 
 
 @register.inclusion_tag("reviews/star.html")
-def star_rating(review):
-    return {"stars": range(review.rating), "empty": range(5 - review.rating)}
+def star_rating(rating):
+    stars = range(int(rating))
+    half = range(1 if rating % 1 >= 0.5 else 0)
+    empty = range(5 - len(stars) - len(half))
+    return {"stars": stars, "half": half, "empty": empty}
 
 
 @register.inclusion_tag("reviews/link.html", takes_context=True)

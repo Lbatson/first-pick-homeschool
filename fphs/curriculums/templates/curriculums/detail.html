@@ -7,6 +7,7 @@
     <h1>{{ curriculum.name }}</h1>
     <p>{{ curriculum.description }}</p>
     <h4>Rating: {{ avg_rating }}</h4>
+    {% star_rating avg_rating %}
     {% review_link curriculum %}
 
     {% include 'curriculums/group.html' with name="categories" list=categories %}

@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-12 col-md-3 col-lg-2 d-flex flex-column">
                         <h5>Rating: {{review.rating}}</h5>
-                        {% star_rating review %}
+                        {% star_rating review.rating %}
                         {# TODO: Add review ranking based on feedback #}
                         {# {% include 'reviews/helpful.html' %} #}
                     </div>
