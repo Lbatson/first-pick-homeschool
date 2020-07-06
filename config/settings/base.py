@@ -56,7 +56,17 @@ MANAGERS = ADMINS
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db("DJANGO_DB")}
+DATABASES = {
+    "default": {
+        "ENGINE": env.str("DJANGO_DB_ENGINE"),
+        "NAME": env.str("DJANGO_DB_NAME"),
+        "USER": env.str("DJANGO_DB_USERNAME"),
+        "PASSWORD": env.str("DJANGO_DB_PASSWORD"),
+        "HOST": env.str("DJANGO_DB_HOST"),
+        "PORT": env.int("DJANGO_DB_PORT"),
+    }
+}
+# DATABASES = {"default": env.db("DJANGO_DB")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["CONN_MAX_AGE"] = 60
 
@@ -64,10 +74,17 @@ DATABASES["default"]["CONN_MAX_AGE"] = 60
 # CACHES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = {"default": env.cache_url("DJANGO_CACHE")}
+CACHES = {
+    "default": {
+        "BACKEND": env.str("DJANGO_CACHE_BACKEND"),
+        "LOCATION": env.str("DJANGO_CACHE_LOCATION"),
+        "TIMEOUT": env.int("DJANGO_CACHE_TIMEOUT"),
+        "OPTIONS": env.dict("DJANGO_CACHE_OPTIONS"),
+    }
+}
 # Mimicing memcache behavior.
 # http://jazzband.github.io/django-redis/latest/#_memcached_exceptions_behavior
-# CACHES["default"]["OPTIONS"]["IGNORE_EXCEPTIONS"] = True -- added as part of environment variable
+# CACHES["default"]["OPTIONS"]["IGNORE_EXCEPTIONS"] = True
 
 
 # EMAIL
