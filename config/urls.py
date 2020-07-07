@@ -33,6 +33,12 @@ urlpatterns = [
     path("curriculums/", include("fphs.curriculums.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+if not settings.DEBUG:
+    urlpatterns += [
+        # Email
+        path("anymail/", include("anymail.urls")),
+    ]
+
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
     urlpatterns += staticfiles_urlpatterns()
