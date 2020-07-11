@@ -4,6 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-
+echo 'Running migrations...'
 python manage.py migrate
+
+echo 'Starting application...'
 uvicorn config.asgi:application --host 0.0.0.0 --reload

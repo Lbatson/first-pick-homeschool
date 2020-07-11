@@ -49,6 +49,10 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 ADMIN_URL = env.str("DJANGO_ADMIN_URL")
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [env.tuple("DJANGO_ADMIN_ACCOUNT")]
+# For creating the initial superuser
+ADMIN_EMAIL = ADMINS[0][1]
+ADMIN_USERNAME = env.str("DJANGO_ADMIN_USERNAME")
+ADMIN_PASSWORD = env.str("DJANGO_ADMIN_PASSWORD")
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
@@ -77,7 +81,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = 60
 CACHES = {
     "default": {
         "BACKEND": env.str("DJANGO_CACHE_BACKEND"),
-        "LOCATION": env.str("DJANGO_CACHE_LOCATION"),
+        "LOCATION": f'redis://${env.str("DJANGO_CACHE_LOCATION")}',
         "TIMEOUT": env.int("DJANGO_CACHE_TIMEOUT"),
         "OPTIONS": env.dict("DJANGO_CACHE_OPTIONS"),
     }
@@ -91,18 +95,21 @@ CACHES = {
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = env.str("DJANGO_EMAIL_BACKEND")
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-host
-EMAIL_HOST = env.str("DJANGO_EMAIL_HOST")
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-EMAIL_PORT = env.int("DJANGO_EMAIL_PORT")
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
-EMAIL_TIMEOUT = env.int("DJANGO_EMAIL_TIMEOUT")
+
+if DEBUG:
+    # https://docs.djangoproject.com/en/dev/ref/settings/#email-host
+    EMAIL_HOST = env.str("DJANGO_EMAIL_HOST")
+    # https://docs.djangoproject.com/en/dev/ref/settings/#email-port
+    EMAIL_PORT = env.int("DJANGO_EMAIL_PORT")
+    # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
+    EMAIL_TIMEOUT = env.int("DJANGO_EMAIL_TIMEOUT")
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = env.str("DJANGO_DEFAULT_FROM_EMAIL")
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = env.str("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
-EMAIL_SUBJECT_PREFIX = env.str("DJANGO_EMAIL_SUBJECT_PREFIX")
+# EMAIL_SUBJECT_PREFIX = env.str("DJANGO_EMAIL_SUBJECT_PREFIX")
 
 
 # STORAGES
@@ -267,7 +274,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
-    "django.middleware.common.CommonMiddleware",
+    "fphs.utils.middleware.OverrideCommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",

@@ -1,4 +1,4 @@
-# docker-compose build -f production.yml -e ENV=test/production
+# export ENV=(test | production) && docker-compose -f production.yml build
 version: '3.8'
 
 services:
