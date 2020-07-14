@@ -32,7 +32,7 @@ AWS_S3_REGION_NAME = env.str("DJANGO_AWS_S3_REGION_NAME")
 AWS_DEFAULT_ACL = None
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_QUERYSTRING_AUTH = False
-# DO NOT change these unless you know what you're doing.
+# DO NOT change these unless you know what you"re doing.
 _AWS_EXPIRY = 60 * 60 * 24 * 7
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_S3_OBJECT_PARAMETERS = {
@@ -58,23 +58,33 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
     "formatters": {
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        },
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s "
             "%(process)d %(thread)d %(message)s"
-        }
+        },
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
-        }
+        },
+        "django.server": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server",
+        },
     },
     "loggers": {
-        "django": {"handlers": ["console"], "level": "ERROR", "propogate": False},
+        "django": {"handlers": ["console"], "level": "INFO", "propogate": False},
         "django.server": {
             "handlers": ["django.server"],
-            "level": "ERROR",
+            "level": "INFO",
             "propagate": False,
         },
         # Errors logged by the SDK itself
