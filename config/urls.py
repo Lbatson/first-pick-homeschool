@@ -29,6 +29,10 @@ urlpatterns = [
     # User management
     path("accounts/", include("allauth.urls")),
     path("users/", include("fphs.users.urls", namespace="users")),
+    # Wagtail CMS
+    path("cms/", include("wagtail.admin.urls")),
+    path("documents/", include("wagtail.documents.urls")),
+    path("pages/", include("wagtail.core.urls")),
     # Your stuff: custom urls includes go here
     path("curriculums/", include("fphs.curriculums.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

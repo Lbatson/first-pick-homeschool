@@ -201,6 +201,19 @@ THIRD_PARTY_APPS = [
     # "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.google",
     "captcha",
+    "modelcluster",
+    "taggit",
+    "wagtail.contrib.forms",
+    "wagtail.contrib.redirects",
+    "wagtail.embeds",
+    "wagtail.sites",
+    "wagtail.users",
+    "wagtail.snippets",
+    "wagtail.documents",
+    "wagtail.images",
+    "wagtail.search",
+    "wagtail.admin",
+    "wagtail.core",
 ]
 
 LOCAL_APPS = [
@@ -298,6 +311,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
 
@@ -365,3 +379,5 @@ MESSAGE_TAGS = {
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }
+
+WAGTAIL_SITE_NAME = "First Pick Homeschool"
