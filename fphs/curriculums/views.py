@@ -102,12 +102,16 @@ def detail(request, id):
         map(lambda s: s.category, curriculum.subjects.select_related("category"))
     )
     reviews = curriculum.reviews.order_by("-created")[:3]
+
+    def get_values(items):
+        return items[0], items[-1] if len(items) > 1 else None
+
     context = {
         "curriculum": curriculum,
         "categories": categories,
         "subjects": curriculum.subjects.all(),
-        "grades": curriculum.grades.all(),
-        "ages": curriculum.ages.all(),
+        "grades": get_values(list(curriculum.grades.all())),
+        "ages": get_values(list(curriculum.ages.all())),
         "reviews": reviews,
         "avg_rating": reviews.aggregate(avg_rating=Coalesce(Avg("rating"), 0.0))[
             "avg_rating"

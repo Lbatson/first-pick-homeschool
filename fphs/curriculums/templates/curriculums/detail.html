@@ -10,10 +10,18 @@
     {% star_rating avg_rating %}
     {% review_link curriculum %}
 
+    <br/><br/>
+    <h4>Publisher</h4>
+    <p>{{ curriculum.publisher }}</p>
+
     {% include 'curriculums/group.html' with name="categories" list=categories %}
     {% include 'curriculums/group.html' with name="subjects" list=subjects %}
-    {% include 'curriculums/group.html' with name="grades" list=grades %}
-    {% include 'curriculums/group.html' with name="ages" list=ages %}
+
+    <h3>Grades</h3>
+    <p>{{ grades.0 }}{% if grades.1 %} - {{ grades.1 }}{% endif %}</p>
+
+    <h3>Ages</h3>
+    <p>{{ ages.0 }}{% if ages.1 %} - {{ ages.1 }}{% endif %}</p>
 
     <div class="row my-2">
         <div class="col-12">
