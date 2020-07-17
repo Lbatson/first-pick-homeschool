@@ -217,9 +217,9 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "fphs.users.apps.UsersConfig",
-    # Your stuff: custom apps go here
+    "fphs.home",
     "fphs.curriculums.apps.CurriculumsConfig",
+    "fphs.users.apps.UsersConfig",
     "fphs.utils.apps.UtilsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from fphs.utils.views import robots_txt, ContactView
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    # path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path("robots.txt", robots_txt, name="robots"),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
@@ -29,12 +29,12 @@ urlpatterns = [
     # User management
     path("accounts/", include("allauth.urls")),
     path("users/", include("fphs.users.urls", namespace="users")),
+    # Curriculums
+    path("curriculums/", include("fphs.curriculums.urls")),
     # Wagtail CMS
     path("cms/", include("wagtail.admin.urls")),
     path("documents/", include("wagtail.documents.urls")),
-    path("pages/", include("wagtail.core.urls")),
-    # Your stuff: custom urls includes go here
-    path("curriculums/", include("fphs.curriculums.urls")),
+    path("", include(("wagtail.core.urls", "wagtail"), namespace="wagtail")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
