@@ -205,6 +205,7 @@ THIRD_PARTY_APPS = [
     "modelcluster",
     "taggit",
     "wagtail.contrib.forms",
+    "wagtail.contrib.postgres_search",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
     "wagtail.sites",
@@ -382,5 +383,9 @@ MESSAGE_TAGS = {
     messages.ERROR: "alert-danger",
 }
 
-WAGTAIL_SITE_NAME = "First Pick Homeschool"
 TAGGIT_CASE_INSENSITIVE = True
+
+WAGTAIL_SITE_NAME = "First Pick Homeschool"
+WAGTAILSEARCH_BACKENDS = {
+    "default": {"BACKEND": "wagtail.contrib.postgres_search.backend",},
+}
