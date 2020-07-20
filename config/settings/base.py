@@ -205,6 +205,7 @@ THIRD_PARTY_APPS = [
     "modelcluster",
     "taggit",
     "wagtail.contrib.forms",
+    "wagtail.contrib.modeladmin",
     "wagtail.contrib.postgres_search",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
