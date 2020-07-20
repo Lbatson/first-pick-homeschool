@@ -1,6 +1,8 @@
 {# {% include 'curriculums/radio-group.html' with name="" list= filters= %} #}
 {% load curriculum_extras %}
+
 {% is_filtered list filters as filtered %}
+
 <a class="nav-link dropdown-toggle font-size-lg text-reset border-bottom collapsed" data-toggle="collapse" href="#{{ name }}-collapse" aria-expanded="false">{{ title|title }}</a>
 <div class="collapse {% if filtered %} show {% endif %}" id="{{ name }}-collapse">
     <div class="form-group">

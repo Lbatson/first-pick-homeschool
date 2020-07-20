@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+
 {% load curriculum_extras %}
 
-{% block title %}HomeSchool Reviews - Curriculums{% endblock %}
+{% block head_title %}Curriculums{% endblock %}
 
 {% block content %}
     <form action="{% url 'curriculums:index' %}" method="get">

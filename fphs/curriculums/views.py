@@ -137,8 +137,7 @@ class ReviewsIndexView(generic.ListView):
     context_object_name = "reviews"
 
     def get_queryset(self):
-        c_id = self.kwargs.get("id")
-        return Review.objects.filter(curriculum_id=c_id)
+        return Review.objects.filter(curriculum_id=self.kwargs.get("id"))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -152,20 +151,22 @@ class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateVi
     success_message = "Your review has been submitted"
 
     def get_success_url(self):
-        c_id = self.kwargs.get("id")
-        return reverse("curriculums:detail", kwargs={"id": c_id})
+        return reverse("curriculums:detail", kwargs={"id": self.kwargs.get("id")})
 
     def form_valid(self, form):
-        c_id = self.kwargs.get("id")
-        form.instance.curriculum = get_object_or_404(Curriculum, id=c_id)
+        form.instance.curriculum = get_object_or_404(
+            Curriculum, id=self.kwargs.get("id")
+        )
         form.instance.user = self.request.user
         return super().form_valid(form)
 
     def render_to_response(self, context, **response_kwargs):
         c_id = self.kwargs.get("id")
         curriculum = get_object_or_404(Curriculum, id=c_id)
-        user = self.request.user
-        review = curriculum.reviews.filter(user__id=user.id).first() or None
+        context["curriculum"] = curriculum
+        review = (
+            curriculum.reviews.filter(user__id=self.request.user.id).first() or None
+        )
         if review:
             return redirect("curriculums:reviews-update", id=c_id, pk=review.id)
         return super().render_to_response(context, **response_kwargs)
@@ -177,9 +178,11 @@ class ReviewUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateVi
     success_message = "Your review has been updated"
 
     def get_success_url(self):
-        c_id = self.kwargs.get("id")
-        return reverse("curriculums:detail", kwargs={"id": c_id})
+        return reverse("curriculums:detail", kwargs={"id": self.kwargs.get("id")})
 
     def get_object(self, queryset=None):
-        get_object_or_404(Curriculum, pk=self.kwargs.get("id"))
         return get_object_or_404(Review, pk=self.kwargs.get("pk"))
+
+    def render_to_response(self, context, **response_kwargs):
+        context["curriculum"] = get_object_or_404(Curriculum, pk=self.kwargs.get("id"))
+        return super().render_to_response(context, **response_kwargs)

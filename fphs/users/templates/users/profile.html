@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+
 {% load curriculum_extras %}
 
-{% block title %}HomeSchool Reviews - User Profile - {{object.username}}{% endblock %}
+{% block head_title %}User Profile - {{object.username}}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -13,7 +14,7 @@
         <div class="col-12">
             {% if reviews %}
                 <h3>Latest Reviews</h3>
-                <h5><a href="{% url 'users:reviews' object.username %}">View All</a></h6>
+                <h5><a href="{% url 'users:reviews' object.username %}">View All</a></h5>
             {% else %}
                 <p>No Reviews</p>
             {% endif %}
