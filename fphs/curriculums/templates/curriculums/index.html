@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% load curriculum_extras %}
+{% load curriculum_extras wagtailmetadata_tags %}
 
-{% block head_title %}Curriculums{% endblock %}
+{% block meta_tags %}{% meta_tags metadata %}{% endblock %}
 
 {% block content %}
     <form action="{% url 'curriculums:index' %}" method="get">

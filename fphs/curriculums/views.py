@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 
+from fphs.utils.models import Metadata
+
 from .models import (
     Curriculum,
     CurriculumForm,
@@ -71,6 +73,9 @@ class CurriculumIndexView(generic.ListView):
         context["grades"] = list(Grade.objects.all())
         context["ages"] = list(Age.objects.all())
         context["preference"] = list(ReligiousPreference.objects.all())
+        context["metadata"] = Metadata(
+            self.request, "Curriculums", "List of curriculums"
+        )
         return context
 
     def get_filters(self):
