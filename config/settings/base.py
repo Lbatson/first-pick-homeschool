@@ -81,7 +81,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = 60
 CACHES = {
     "default": {
         "BACKEND": env.str("DJANGO_CACHE_BACKEND"),
-        "LOCATION": f'redis://${env.str("DJANGO_CACHE_LOCATION")}',
+        "LOCATION": f'redis://{env.str("DJANGO_CACHE_LOCATION")}',
         "TIMEOUT": env.int("DJANGO_CACHE_TIMEOUT"),
         "OPTIONS": env.dict("DJANGO_CACHE_OPTIONS"),
     }
@@ -220,6 +220,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "fphs.blog",
     "fphs.home",
     "fphs.curriculums.apps.CurriculumsConfig",
     "fphs.users.apps.UsersConfig",
