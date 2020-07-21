@@ -5,6 +5,8 @@ from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.search import index
 
+from wagtailmetadata.models import MetadataPageMixin
+
 
 class BlogIndex(Page):
     intro = RichTextField(blank=True)
@@ -17,7 +19,7 @@ class BlogIndex(Page):
         return context
 
 
-class BlogPost(Page):
+class BlogPost(MetadataPageMixin, Page):
     description = models.CharField(max_length=255)
     body = RichTextField(blank=True)
     date = models.DateField("Post date")

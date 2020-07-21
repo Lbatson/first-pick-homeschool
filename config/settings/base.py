@@ -217,6 +217,7 @@ THIRD_PARTY_APPS = [
     "wagtail.search",
     "wagtail.admin",
     "wagtail.core",
+    "wagtailmetadata",
 ]
 
 LOCAL_APPS = [

@@ -18,3 +18,4 @@ django-compressor==2.4  # https://github.com/django-compressor/django-compressor
 django-redis==4.11.0  # https://github.com/jazzband/django-redis
 django-recaptcha==2.0.6 # https://github.com/praekelt/django-recaptcha
 wagtail==2.9.3 #https://github.com/wagtail/wagtail
+wagtail-metadata==3.2.0 #https://github.com/neon-jungle/wagtail-metadata
