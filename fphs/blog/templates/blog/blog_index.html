@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block head_title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+    <div class="intro">{{ page.intro|richtext }}</div>
+
+    {% for post in posts %}
+        {% with post=post.specific %}
+            <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+            {{ post.description }}
+        {% endwith %}
+    {% endfor %}
+{% endblock %}

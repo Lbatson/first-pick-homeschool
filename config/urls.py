@@ -36,7 +36,7 @@ urlpatterns = [
     # Wagtail CMS
     path("cms/", include("wagtail.admin.urls")),
     path("documents/", include("wagtail.documents.urls")),
-    path("", include(("wagtail.core.urls", "wagtail"), namespace="wagtail")),
+    path("", include("wagtail.core.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
