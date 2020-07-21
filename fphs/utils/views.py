@@ -15,6 +15,7 @@ def robots_txt(request):
     lines = [
         "User-Agent: *",
         f"Disallow: {'/admin' if isProd else '/'}",
+        f"Sitemap: { request.scheme }://{ request.get_host() }/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
 
