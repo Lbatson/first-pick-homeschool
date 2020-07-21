@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags %}
 
 {% block content %}
     <div class="shadow-sm rounded bg-white pt-5 pl-5 pr-5 pb-4">
         <h2 class="pb-3">Privacy Policy</h2>
         <p>Our Privacy Policy was posted on 20 June 2020 and last updated on 20 June 2020. It governs the privacy terms of
-            our website, located at <a href="{% url 'home' %}">firstpickhomeschool.com</a>, communications (e.g., emails, phone
+            our website, located at <a href="{% slugurl 'home' %}">firstpickhomeschool.com</a>, communications (e.g., emails, phone
             calls, and texts), events, and tools we provide you (collectively,
             the "Service"). Any
             capitalized terms not defined in our Privacy Policy, have the meaning as specified in our Terms of Service
             accessible at
-            <a href="{% url 'terms_of_service' %}">https://firstpickhomeschool.com/legal/terms-of-service</a></p>
+            <a href="{% slugurl 'terms-of-service' %}">https://firstpickhomeschool.com/legal/terms-of-service</a></p>
         <h2 class="pt-3 pb-3">Your Privacy</h2>
         <p>Our Service follows all legal requirements to protect your privacy. Our Privacy Policy is a legal statement that
             explains how we may collect information from you, how we may share your information, and how you can limit our
