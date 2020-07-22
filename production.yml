@@ -1,4 +1,6 @@
 # export ENV=(test | production) && docker-compose -f production.yml build
+# aws ecr get-login-password --profile fphs --region us-east-2 | docker login --username AWS --password-stdin 278336586285.dkr.ecr.us-east-2.amazonaws.com
+# docker push 278336586285.dkr.ecr.us-east-2.amazonaws.com/fphs-test:latest
 version: '3.8'
 
 services:
