@@ -69,27 +69,7 @@
                     </div>
                     <div class="col-12">
                         {% if is_paginated %}
-                            <nav aria-label="Curriculum page navigation">
-                                <ul class="pagination">
-                                    <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
-                                        <a class="page-link"
-                                           href="{% if page_obj.has_previous %}?{% url_replace page=page_obj.previous_page_number %}{% endif %}"
-                                           {% if not page_obj.has_previous %}tabindex="-1" aria-disabled="true"{% endif %}
-                                           aria-label="Previous">Previous</a>
-                                    </li>
-                                    <li class="page-item disabled">
-                                        <p class="page-link" tabindex="-1" aria-disabled="true">
-                                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-                                        </p>
-                                    </li>
-                                    <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
-                                        <a class="page-link"
-                                           href="{% if page_obj.has_next %}?{% url_replace page=page_obj.next_page_number %}{% endif %}"
-                                           {% if not page_obj.has_next %}tabindex="-1" aria-disabled="true"{% endif %}
-                                           aria-label="Next">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            {% include 'pagination.html' with name="curriculum" page=page_obj  %}
                         {% endif %}
                     </div>
                 </div>

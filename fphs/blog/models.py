@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 
 from wagtail.core.models import Page
@@ -13,9 +14,23 @@ class BlogIndex(Page):
 
     content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
 
-    def get_context(self, request):
+    def get_posts(self):
+        return self.get_children().live().public().order_by("-first_published_at")
+
+    def paginate(self, request):
+        page = request.GET.get("page")
+        paginator = Paginator(self.get_posts(), 10)
+        try:
+            pages = paginator.page(page)
+        except PageNotAnInteger:
+            pages = paginator.page(1)
+        except EmptyPage:
+            pages = paginator.page(paginator.num_pages)
+        return pages
+
+    def get_context(self, request, **kwargs):
         context = super().get_context(request)
-        context["posts"] = self.get_children().live().order_by("-first_published_at")
+        context["posts"] = self.paginate(request)
         return context
 
 

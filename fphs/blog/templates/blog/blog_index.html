@@ -13,4 +13,6 @@
             {{ post.description }}
         {% endwith %}
     {% endfor %}
+
+    {% include 'pagination.html' with name=page.title page=posts  %}
 {% endblock %}

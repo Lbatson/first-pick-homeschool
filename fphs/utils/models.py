@@ -4,10 +4,11 @@ from wagtailmetadata.models import MetadataMixin
 
 
 class Metadata(MetadataMixin):
-    def __init__(self, request, title, description):
+    def __init__(self, request, title, description, image=None):
         self.request = request
         self.title = title
         self.description = description
+        self.image = image
 
     def get_meta_url(self):
         return self.request.build_absolute_uri()
@@ -17,6 +18,9 @@ class Metadata(MetadataMixin):
 
     def get_meta_description(self):
         return self.description
+
+    def get_meta_image(self):
+        return self.image
 
 
 class Contact(models.Model):
