@@ -7,6 +7,7 @@
 {% block content %}
     <h1>{{ curriculum.name }}</h1>
     <p>{{ curriculum.description }}</p>
+    {% favorite_link curriculum %}
     <h4>Rating: {{ avg_rating }}</h4>
     {% star_rating avg_rating %}
     {% review_link curriculum %}

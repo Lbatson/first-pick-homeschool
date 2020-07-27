@@ -1,11 +1,15 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Avg, Q
 from django.db.models.functions import Coalesce
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
+from django.views.decorators.http import require_GET
 
+from fphs.users.models import User
 from fphs.utils.models import Metadata
 
 from .models import (
@@ -58,6 +62,7 @@ class CurriculumIndexView(generic.ListView):
             Curriculum.objects.annotate(
                 avg_rating=Coalesce(Avg("reviews__rating"), 0.0)
             )
+            .filter(is_confirmed=True)
             .filter(query)
             .distinct()
             .order_by(order)
@@ -101,6 +106,7 @@ class CurriculumIndexView(generic.ListView):
             return Sort.Values.NEWEST
 
 
+@require_GET
 def detail(request, id):
     curriculum = get_object_or_404(Curriculum, pk=id, is_confirmed=True)
     categories = set(
@@ -123,6 +129,23 @@ def detail(request, id):
         ],
     }
     return render(request, "curriculums/detail.html", context)
+
+
+@login_required
+def favorite(request, id):
+    curriculum = get_object_or_404(Curriculum, pk=id, is_confirmed=True)
+    # Redirect to detail page after login
+    if request.method == "GET":
+        return HttpResponseRedirect(reverse("curriculums:detail", kwargs={"id": id}))
+
+    # Save favorite and go back to previous page
+    user: User = request.user
+    if curriculum in user.favorite_curriculums.all():
+        user.favorite_curriculums.remove(curriculum)
+    else:
+        user.favorite_curriculums.add(curriculum)
+    user.save()
+    return HttpResponseRedirect(request.POST.get("next", "/"))
 
 
 class CurriculumCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):

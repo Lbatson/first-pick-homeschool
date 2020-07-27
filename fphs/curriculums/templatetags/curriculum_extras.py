@@ -8,6 +8,16 @@ def is_filtered(items, filterIds):
     return bool(set(map(lambda i: i.id, items)).intersection(filterIds))
 
 
+@register.inclusion_tag("curriculums/favorite.html", takes_context=True)
+def favorite_link(context, curriculum):
+    request = context["request"]
+    user = request.user
+    if user.is_anonymous:
+        return {"curriculum": curriculum, "is_favorite": False}
+    is_favorite = True if curriculum in user.favorite_curriculums.all() else False
+    return {"request": request, "curriculum": curriculum, "is_favorite": is_favorite}
+
+
 @register.inclusion_tag("reviews/star.html")
 def star_rating(rating):
     stars = range(int(rating))
