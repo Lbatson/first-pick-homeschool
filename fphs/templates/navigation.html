@@ -16,7 +16,7 @@
             <div class="p-2 bd-highlight"><a href="{% slugurl 'blog' %}">{% trans "Blog" %}</a></div>
             <div class="p-2 bd-highlight"><a href="{% url 'curriculums:index' %}">Curriculums</a></div>
             {% if request.user.is_authenticated %}
-                <div class="p-2 bd-highlight"><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></div>
+                <div class="p-2 bd-highlight"><a href="{% url 'users:profile' request.user.username  %}">{% trans "My Profile" %}</a></div>
                 <div class="p-2 bd-highlight"><a href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a></div>
             {% else %}
                 <div class="p-2 bd-highlight"><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></div>
