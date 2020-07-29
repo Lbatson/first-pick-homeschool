@@ -8470,8 +8470,51 @@ a.text-dark:hover, a.text-dark:focus {
       -ms-flex-pack: justify;
           justify-content: space-between; }
 
+.curriculum-list-item .row {
+  height: 128px; }
+  .curriculum-list-item .row .content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly; }
+    .curriculum-list-item .row .content .title {
+      margin-bottom: 0; }
+    .curriculum-list-item .row .content .description {
+      max-height: 72px;
+      max-height: 4.5rem;
+      margin-bottom: 0;
+      overflow: hidden;
+      line-height: 24px;
+      line-height: 1.5rem;
+      word-break: break-word;
+      text-overflow: ellipsis; }
+  .curriculum-list-item .row .actions {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly; }
+
 button.btn.btn-link.btn-favorite {
-  color: crimson; }
+  color: crimson;
+  padding: 0 0 10px 0; }
 
 .account-dropdown {
   display: -webkit-box;

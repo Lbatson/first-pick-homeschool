@@ -1,25 +1,25 @@
-{% load curriculum_extras wagtailimages_tags %}
+{% load i18n wagtailimages_tags curriculum_extras %}
 
-<li class="media my-4">
+<li class="media my-3 p-2 shadow-sm border rounded curriculum-list-item">
     {% if curriculum.image %}
         <div class="mr-3">{% image curriculum.image fill-128x128 %}</div>
     {% else %}
         <img src="https://via.placeholder.com/128" class="mr-3 img-fluid" alt="{{ curriculum.name }}">
     {% endif %}
-    <div class="media-body">
+    <div class="pr-2 media-body">
         <div class="row">
-            <div class="col-md-8">
-                <h5><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></h5>
-                <p>{{ curriculum.description }}</p>
+            <div class="col-12 col-md-7 col-lg-8 content">
+                <h5 class="title"><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></h5>
+                <p class="description">{{ curriculum.description }}</p>
+            </div>
+            <div class="col-12 col-md-5 col-lg-4 actions">
+                {% favorite_link curriculum %}
                 {% if curriculum.avg_rating > 0 %}
-                    <h6>Rating: {{ curriculum.avg_rating }}</h6>
+                    <h6>{% trans "Rating" %}: {{ curriculum.avg_rating }}</h6>
                     {% star_rating curriculum.avg_rating %}
                 {% else %}
-                    No reviews
+                    <p class="text-muted">{% trans "No reviews" %}</p>
                 {% endif %}
-            </div>
-            <div class="col-md-4">
-                {% favorite_link curriculum %}
             </div>
         </div>
     </div>

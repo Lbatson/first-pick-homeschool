@@ -1,17 +1,31 @@
 {% extends "base.html" %}
 
-{% load curriculum_extras wagtailimages_tags wagtailmetadata_tags %}
+{% load i18n wagtailimages_tags wagtailmetadata_tags curriculum_extras %}
 
 {% block meta_tags %}{% meta_tags metadata %}{% endblock %}
 
 {% block content %}
     <form id="search-form" action="{% url 'curriculums:index' %}" method="get"></form>
-    <div class="row">
-        <div class="col-12">
-            <div class="input-group">
-                <input class="form-control" form="search-form" name="search" aria-describedby="search" type="text">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" form="search-form" type="submit">Search</button>
+    <div class="row my-2">
+        <div class="col-md-4 col-lg-3">
+            <h5 class="ml-3 mt-3 d-sm-none d-md-block text-muted">{% trans "Filters" %}</h5>
+        </div>
+        <div class="col-md-8 col-lg-9">
+            <div class="row">
+                <div class="col-md-8 col-lg-9 my-2">
+                    <div class="input-group">
+                        <input class="form-control" form="search-form" name="search" aria-describedby="search" type="text">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" form="search-form" type="submit">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 my-2">
+                    <select class="custom-select" form="search-form" name="sort">
+                        {% for value, label in sorters %}
+                            <option value="{{value}}" {% if value|stringformat:"i" == sort %} selected {% endif %}>{{label}}</option>
+                        {% endfor%}
+                    </select>
                 </div>
             </div>
         </div>
@@ -31,18 +45,11 @@
             <p class="text-muted">Don't see what you're looking for?<a href="{% url 'curriculums:create' %}">Submit a curriculum for review</a></p>
         </div>
         <div class="col-12 col-md-8 col-lg-9">
-            <div class="row">
-                <div class="col-12 col-md-8 col-lg-9">
-                    <h5 class="text-muted">Results: {% if is_paginated %} {{page_obj.paginator.count}} {% else %} {{curriculums|length}} {% endif %}</h5>
-                </div>
-                <div class="col-12 col-md-4 col-lg-3">
-                    <select class="custom-select" form="search-form" name="sort">
-                        {% for value, label in sorters %}
-                            <option value="{{value}}" {% if value|stringformat:"i" == sort %} selected {% endif %}>{{label}}</option>
-                        {% endfor%}
-                    </select>
-                </div>
-            </div>
+{#            <div class="row">#}
+{#                <div class="col-12 col-md-8 col-lg-9">#}
+{#                    <h5 class="text-muted">Results: {% if is_paginated %} {{page_obj.paginator.count}} {% else %} {{curriculums|length}} {% endif %}</h5>#}
+{#                </div>#}
+{#            </div>#}
             <div class="row">
                 <div class="col-12">
                     {% if curriculums %}

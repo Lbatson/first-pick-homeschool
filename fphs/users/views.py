@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Avg
+from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -23,7 +25,9 @@ class UserFavoritesView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return self.request.user.favorite_curriculums.all()
+        return self.request.user.favorite_curriculums.annotate(
+            avg_rating=Coalesce(Avg("reviews__rating"), 0.0)
+        ).all()
 
 
 class UserProfileView(DetailView):
