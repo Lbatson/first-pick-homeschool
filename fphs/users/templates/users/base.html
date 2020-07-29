@@ -8,7 +8,10 @@
         <div class="list-group">
             <a href="{% url 'users:favorites' %}" class="list-group-item list-group-item-action {% if request.path == '/users/favorites/' %}active{% endif %}">{% trans "Favorites" %}</a>
             <a href="{% url 'users:profile-edit' %}" class="list-group-item list-group-item-action {% if request.path == '/users/profile/edit/' %}active{% endif %}">{% trans "Edit Profile" %}</a>
-            <a href="{% url 'users:privacy' %}" class="list-group-item list-group-item-action {% if request.path == '/users/privacy/' %}active{% endif %}">{% trans "Privacy settings" %}</a>
+            <a href="{% url 'account_email' %}" class="list-group-item list-group-item-action {% if request.path == '/accounts/email/' %}active{% endif %}">{% trans "Email" %}</a>
+            <a href="{% url 'account_change_password' %}" class="list-group-item list-group-item-action {% if request.path == '/accounts/password/change/' %}active{% endif %}">{% trans "Password" %}</a>
+            <a href="{% url 'users:privacy' %}" class="list-group-item list-group-item-action {% if request.path == '/users/privacy/' %}active{% endif %}">{% trans "Privacy" %}</a>
+            <a href="{% url 'account_logout' %}" class="list-group-item list-group-item-action {% if request.path == '/accounts/logout/' %}active{% endif %}">{% trans "Sign Out" %}</a>
         </div>
     </div>
     <div class="col-md-9">{% block inner %}{% endblock %}</div>

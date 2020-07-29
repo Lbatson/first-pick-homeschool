@@ -45,9 +45,7 @@ class UserProfileEditView(LoginRequiredMixin, UpdateView):
         return User.objects.get(username=self.request.user.username)
 
     def get_success_url(self):
-        return reverse(
-            "users:profile-edit", kwargs={"username": self.request.user.username}
-        )
+        return reverse("users:profile-edit")
 
     def form_valid(self, form):
         messages.add_message(
