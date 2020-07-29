@@ -8,28 +8,23 @@
     <div class="row">
         <div class="col-12">
             <h3>{{ object.username }}</h3>
-            {% if object == request.user %}
-                <!-- Action buttons -->
-                <a class="btn btn-primary" href="{% url 'users:edit-profile' %}" role="button">My Info</a>
-                <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
-                <!-- End Action buttons -->
-            {% endif %}
-            </button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            {% if reviews %}
-                <h3>Latest Reviews</h3>
-                <h5><a href="{% url 'users:reviews' object.username %}">View All</a></h5>
-            {% else %}
-                <p>No Reviews</p>
-            {% endif %}
+    {% if object.public_reviews %}
+        <div class="row">
+            <div class="col-12">
+                {% if reviews %}
+                    <h3>Latest Reviews</h3>
+                    <h5><a href="{% url 'users:reviews' object.username %}">View All</a></h5>
+                {% else %}
+                    <p>No Reviews</p>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="row my-2">
-        {% for review in reviews %}
-            {% include 'reviews/card.html' with review=review detail=review.curriculum %}
-        {% endfor %}
-    </div>
+        <div class="row my-2">
+            {% for review in reviews %}
+                {% include 'reviews/card.html' with review=review detail=review.curriculum %}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

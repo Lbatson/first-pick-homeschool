@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="{% url 'users:favorites' %}" class="list-group-item list-group-item-action {% if request.path == '/users/favorites/' %}active{% endif %}">{% trans "Favorites" %}</a>
+            <a href="{% url 'users:profile-edit' %}" class="list-group-item list-group-item-action {% if request.path == '/users/profile/edit/' %}active{% endif %}">{% trans "Edit Profile" %}</a>
+            <a href="{% url 'users:privacy' %}" class="list-group-item list-group-item-action {% if request.path == '/users/privacy/' %}active{% endif %}">{% trans "Privacy settings" %}</a>
+        </div>
+    </div>
+    <div class="col-md-9">{% block inner %}{% endblock %}</div>
+</div>
+{% endblock %}

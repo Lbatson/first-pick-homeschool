@@ -6,9 +6,23 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView, RedirectView, UpdateView
 from fphs.curriculums.models import Review
-from .forms import UserProfileEditForm
+from .forms import UserProfileForm, UserPrivacyForm
 
 User = get_user_model()
+
+
+class UserRedirectView(LoginRequiredMixin, RedirectView):
+    permanent = False
+
+    def get_redirect_url(self):
+        return reverse("users:profile", kwargs={"username": self.request.user.username})
+
+
+class UserFavoritesView(ListView):
+    template_name = "users/user_favorites_list.html"
+
+    def get_queryset(self):
+        return self.request.user.favorite_curriculums.all()
 
 
 class UserProfileView(DetailView):
@@ -25,17 +39,35 @@ class UserProfileView(DetailView):
 
 
 class UserProfileEditView(LoginRequiredMixin, UpdateView):
-    form_class = UserProfileEditForm
+    form_class = UserProfileForm
 
     def get_object(self):
         return User.objects.get(username=self.request.user.username)
 
     def get_success_url(self):
-        return reverse("users:profile", kwargs={"username": self.request.user.username})
+        return reverse(
+            "users:profile-edit", kwargs={"username": self.request.user.username}
+        )
 
     def form_valid(self, form):
         messages.add_message(
-            self.request, messages.INFO, _("Profile successfully updated")
+            self.request, messages.SUCCESS, _("Profile successfully updated")
+        )
+        return super().form_valid(form)
+
+
+class UserPrivacyView(LoginRequiredMixin, UpdateView):
+    form_class = UserPrivacyForm
+
+    def get_object(self):
+        return User.objects.get(username=self.request.user.username)
+
+    def get_success_url(self):
+        return reverse("users:privacy")
+
+    def form_valid(self, form):
+        messages.add_message(
+            self.request, messages.SUCCESS, _("Settings successfully updated")
         )
         return super().form_valid(form)
 

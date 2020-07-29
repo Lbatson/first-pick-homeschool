@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field
+from crispy_forms.layout import Layout, Submit
 from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -33,13 +33,44 @@ class UserCreationForm(forms.UserCreationForm):
         raise ValidationError(self.error_messages["duplicate_username"])
 
 
-class UserProfileEditForm(ModelForm):
+class UserProfileForm(ModelForm):
     class Meta:
         model = User
-        fields = ["name"]
-        labels = {"name": _("Name")}
+        fields = [
+            "name",
+            "bio",
+            "location",
+            "occupation",
+            "website",
+            "facebook",
+            "instagram",
+            "twitter",
+            "pintrest",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.layout = Layout("name", Submit("submit", _("Save")))
+        self.helper.layout = Layout(
+            "name",
+            "bio",
+            "location",
+            "occupation",
+            "website",
+            "facebook",
+            "instagram",
+            "twitter",
+            "pintrest",
+            Submit("submit", _("Save")),
+        )
+
+
+class UserPrivacyForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ["public_reviews"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout("public_reviews", Submit("submit", _("Save")))

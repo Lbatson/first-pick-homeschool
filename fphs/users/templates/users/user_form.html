@@ -1,9 +1,8 @@
-{% extends "base.html" %}
+{% extends "users/base.html" %}
 {% load crispy_forms_tags %}
 
 {% block head_title %}Update - {{ user.username }}{% endblock %}
 
-{% block content %}
-    <h1>{{ user.username }}</h1>
+{% block inner %}
     {% crispy form %}
 {% endblock %}

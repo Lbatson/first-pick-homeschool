@@ -71,3 +71,13 @@ button {
     }
   }
 }
+
+.account-dropdown {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  svg {
+    margin-right: 5px;
+  }
+}
