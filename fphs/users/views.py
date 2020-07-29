@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView, RedirectView, UpdateView
@@ -78,12 +78,20 @@ class UserReviewsListView(ListView):
     context_object_name = "reviews"
     user = None
 
+    def setup(self, request, *args, **kwargs):
+        self.user = get_object_or_404(User, username=kwargs.get("username"))
+        return super().setup(request, *args, **kwargs)
+
     def get_queryset(self):
-        username = self.kwargs.get("username")
-        self.user = get_object_or_404(User, username=username)
         return Review.objects.filter(user_id=self.user.id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user"] = self.user
         return context
+
+    def get(self, request, *args, **kwargs):
+        # Redirect to user's profile if public reviews are disabled and accessed by a different user
+        if not self.user.public_reviews and self.user != request.user:
+            return redirect("users:profile", username=self.user)
+        return super().get(request, *args, **kwargs)
