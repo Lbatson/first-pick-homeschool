@@ -4,8 +4,10 @@
 
 {% block content %}
     <h4>Reviews for <i>{{ user.username }}</i></h4>
-
     {% for review in reviews %}
         {% include 'reviews/row.html' with review=review detail=review.curriculum %}
     {% endfor %}
+    {% if is_paginated %}
+        {% include 'pagination.html' with name="reviews" page=page_obj  %}
+    {% endif %}
 {% endblock %}

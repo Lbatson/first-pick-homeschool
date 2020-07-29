@@ -20,6 +20,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 class UserFavoritesView(ListView):
     template_name = "users/user_favorites_list.html"
+    paginate_by = 10
 
     def get_queryset(self):
         return self.request.user.favorite_curriculums.all()
@@ -76,6 +77,7 @@ class UserReviewsListView(ListView):
     slug_url_kwarg = "username"
     template_name = "users/user_reviews_list.html"
     context_object_name = "reviews"
+    paginate_by = 10
     user = None
 
     def setup(self, request, *args, **kwargs):

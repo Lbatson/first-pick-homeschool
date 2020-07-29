@@ -8,10 +8,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.views.decorators.http import require_GET
-
 from fphs.users.models import User
 from fphs.utils.models import Metadata
-
 from .models import (
     Curriculum,
     CurriculumForm,
@@ -163,6 +161,7 @@ class ReviewsIndexView(generic.ListView):
     model: Review
     template_name = "reviews/index.html"
     context_object_name = "reviews"
+    paginate_by = 20
 
     def get_queryset(self):
         return Review.objects.filter(curriculum_id=self.kwargs.get("id"))

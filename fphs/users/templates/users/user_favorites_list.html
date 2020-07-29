@@ -3,6 +3,9 @@
 {% block inner %}
     <h1>Favorites</h1>
     {% for curriculum in object_list %}
-        {% include 'curriculums/row-item.html' with curriculum=curriculum %}
+        {% include "curriculums/row-item.html" with curriculum=curriculum %}
     {% endfor %}
+    {% if is_paginated %}
+        {% include "pagination.html" with name="favorites" page=page_obj %}
+    {% endif %}
 {% endblock %}

@@ -11,4 +11,7 @@
     {% for review in reviews %}
         {% include 'reviews/row.html' with review=review %}
     {% endfor %}
+    {% if is_paginated %}
+        {% include 'pagination.html' with name="reviews" page=page_obj  %}
+    {% endif %}
 {% endblock %}
