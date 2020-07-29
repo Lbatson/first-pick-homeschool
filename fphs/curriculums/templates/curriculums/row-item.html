@@ -1,0 +1,26 @@
+{% load curriculum_extras wagtailimages_tags %}
+
+<li class="media my-4">
+    {% if curriculum.image %}
+        <div class="mr-3">{% image curriculum.image fill-128x128 %}</div>
+    {% else %}
+        <img src="https://via.placeholder.com/128" class="mr-3 img-fluid" alt="{{ curriculum.name }}">
+    {% endif %}
+    <div class="media-body">
+        <div class="row">
+            <div class="col-md-8">
+                <h5><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></h5>
+                <p>{{ curriculum.description }}</p>
+                {% if curriculum.avg_rating > 0 %}
+                    <h6>Rating: {{ curriculum.avg_rating }}</h6>
+                    {% star_rating curriculum.avg_rating %}
+                {% else %}
+                    No reviews
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                {% favorite_link curriculum %}
+            </div>
+        </div>
+    </div>
+</li>

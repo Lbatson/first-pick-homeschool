@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <form id="favorite-{{ curriculum.id }}" action="{% url 'curriculums:favorite' curriculum.id %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ request.get_full_path }}">

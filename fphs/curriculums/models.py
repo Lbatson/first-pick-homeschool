@@ -110,6 +110,9 @@ class Curriculum(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=2000)
     link = models.URLField(max_length=200)
+    image = models.ForeignKey(
+        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL
+    )
     is_confirmed = models.BooleanField(default=False)
     subjects = models.ManyToManyField(Subject, related_name="curriculums")
     grades = models.ManyToManyField(Grade, related_name="curriculums")

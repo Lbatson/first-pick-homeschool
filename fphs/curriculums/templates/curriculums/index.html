@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load curriculum_extras wagtailmetadata_tags %}
+{% load curriculum_extras wagtailimages_tags wagtailmetadata_tags %}
 
 {% block meta_tags %}{% meta_tags metadata %}{% endblock %}
 
@@ -48,20 +48,7 @@
                     {% if curriculums %}
                         <ul class="list-unstyled">
                             {% for curriculum in curriculums %}
-                                <li class="media my-2">
-                                    <img src="https://via.placeholder.com/64" class="mr-3" alt="{{ curriculum.name }}">
-                                    <div class="media-body">
-                                        <h5><a href="{% url 'curriculums:detail' curriculum.id %}">{{ curriculum.name }}</a></h5>
-                                        <p>{{ curriculum.description }}</p>
-                                        {% favorite_link curriculum %}
-                                        {% if curriculum.avg_rating > 0 %}
-                                            <h6>Rating: {{ curriculum.avg_rating }}</h6>
-                                            {% star_rating curriculum.avg_rating %}
-                                        {% else %}
-                                            No reviews
-                                        {% endif %}
-                                    </div>
-                                </li>
+                                {% include 'curriculums/row-item.html' with curriculum=curriculum %}
                             {% endfor %}
                         </ul>
                     {% else %}
