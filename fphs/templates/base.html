@@ -1,4 +1,4 @@
-{% load static i18n compress%}<!DOCTYPE html>
+{% load static i18n %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -15,11 +15,7 @@
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
     <link href="https://fonts.googleapis.com/css2?family=Atma:wght@300&display=swap" rel="stylesheet">
     {% block css %}
-        <!-- Your stuff: Third-party CSS libraries go here -->
-        {% compress css %}
-            <!-- This file stores project-specific CSS -->
-            <link href="{% static 'css/project.css' %}" rel="stylesheet">
-        {% endcompress %}
+        <link href="{% static 'css/project.min.css' %}" rel="stylesheet">
     {% endblock css %}
 </head>
 <body>
@@ -46,13 +42,9 @@
 <!-- Placed at the end of the document so the pages load faster -->
 {% block javascript %}
     <!-- Vendor dependencies bundled as one file-->
-    {% compress js %}
-        <script src="{% static 'js/vendors.js' %}"></script>
-    {% endcompress %}
+    <script src="{% static 'js/vendors.min.js' %}"></script>
     <!-- place project specific Javascript in this file -->
-    {% compress js %}
-        <script src="{% static 'js/project.js' %}"></script>
-    {% endcompress %}
+    <script src="{% static 'js/project.min.js' %}"></script>
 {% endblock javascript %}
 </body>
 </html>

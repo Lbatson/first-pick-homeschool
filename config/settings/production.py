@@ -132,20 +132,20 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
 # ------------------------------------------------------------------------------
 # django-compressor
 # ------------------------------------------------------------------------------
-# https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
-COMPRESS_ENABLED = env.bool("DJANGO_COMPRESS_ENABLED")
-# https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_STORAGE
-COMPRESS_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_URL
-COMPRESS_URL = STATIC_URL
-# https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_FILTERS
-COMPRESS_FILTERS = {
-    "css": [
-        "compressor.filters.css_default.CssAbsoluteFilter",
-        "compressor.filters.cssmin.rCSSMinFilter",
-    ],
-    "js": ["compressor.filters.jsmin.JSMinFilter"],
-}
+# # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
+# COMPRESS_ENABLED = env.bool("DJANGO_COMPRESS_ENABLED")
+# # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_STORAGE
+# COMPRESS_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_URL
+# COMPRESS_URL = STATIC_URL
+# # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_FILTERS
+# COMPRESS_FILTERS = {
+#     "css": [
+#         "compressor.filters.css_default.CssAbsoluteFilter",
+#         "compressor.filters.cssmin.rCSSMinFilter",
+#     ],
+#     "js": ["compressor.filters.jsmin.JSMinFilter"],
+# }
 # Collectfast
 # ------------------------------------------------------------------------------
 # https://github.com/antonagestam/collectfast#installation
