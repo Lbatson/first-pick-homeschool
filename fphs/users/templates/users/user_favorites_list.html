@@ -1,5 +1,7 @@
 {% extends "users/base.html" %}
 
+{% block head_title %}Favorites - {{object.username}}{% endblock %}
+
 {% block inner %}
     <h1>Favorites</h1>
     {% for curriculum in object_list %}

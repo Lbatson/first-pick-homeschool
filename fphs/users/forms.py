@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
+FormHelper.use_custom_control = False
 User = get_user_model()
 
 
@@ -63,7 +64,7 @@ class UserProfileForm(ModelForm):
             "instagram",
             "twitter",
             "pintrest",
-            Submit("submit", _("Save")),
+            Submit("submit", _("Save"), css_class="btn-secondary"),
         )
 
 
@@ -85,5 +86,5 @@ class UserPrivacyForm(ModelForm):
             HTML(f"<h1>{title}</h1>"),
             "public_reviews",
             HTML(f'<div class="mb-4 text-muted">{public_reviews_text}</div>'),
-            Submit("submit", _("Save")),
+            Submit("submit", _("Save"), css_class="btn-secondary"),
         )

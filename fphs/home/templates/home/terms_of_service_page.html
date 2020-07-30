@@ -5,6 +5,11 @@
 
 {% block content %}
     <h2>{{ page.title }}</h2>
-    <p>Our Terms of Service were posted on <strong>{{ page.first_published_at }}</strong> and last updated on <strong>{{ page.last_published_at }}</strong></p>
+    <p>
+        {% trans "Our Terms of Service were posted on " %}
+        <strong>{{ page.first_published_at }}</strong>
+        {% trans " and last updated on " %}
+        <strong>{{ page.last_published_at }}</strong>
+    </p>
     {{ page.body|richtext }}
 {% endblock content %}

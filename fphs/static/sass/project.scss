@@ -1,11 +1,5 @@
-
 @import "custom_bootstrap_vars";
 @import "bootstrap";
-
-
-
-
-// project specific CSS goes here
 
 ////////////////////////////////
 		//Variables//
@@ -13,12 +7,79 @@
 
 // Alert colors
 
-$white: #fff;
 $mint-green: #d6e9c6;
-$black: #000;
 $pink: #f2dede;
 $dark-pink: #eed3d7;
-$red: #b94a48;
+
+
+////////////////////////////////
+//Overrides//
+////////////////////////////////
+
+a {
+  text-decoration: none;
+}
+
+.btn:focus,
+.custom-select:focus {
+  box-shadow: none;
+}
+
+
+.btn-secondary,
+.btn-secondary:hover {
+  color: $white;
+}
+
+.dropdown-toggle::after {
+  display: none;
+  content: none;
+}
+
+.form-group {
+  margin: 1rem 0;
+
+  label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.navbar {
+  padding: 0 1rem 0 1rem;
+
+  .navbar-brand {
+    display: flex;
+    flex-flow: column nowrap;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .first-row {
+      font-size: 26px;
+      font-weight: bold;
+      line-height: 2rem;
+    }
+
+    .second-row {
+      font-family: 'Atma', cursive;
+      line-height: 2rem;
+    }
+  }
+
+  .large {
+    font-size: 1.5rem;
+  }
+}
+
+.media {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  .media-body {
+    width: 100%;
+  }
+}
 
 ////////////////////////////////
 		//Alerts//
@@ -62,6 +123,30 @@ $red: #b94a48;
   }
 }
 
+.filter-header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  h5 {
+    margin-bottom: 0;
+  }
+
+  .title {
+    margin-left: 1rem;
+  }
+}
+
+.form-group.filters {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.create-prompt {
+  margin-bottom: 0;
+}
+
 .curriculum-list-item {
   .row {
     height: 128px;
@@ -99,7 +184,7 @@ button {
   &.btn {
     &.btn-link {
       &.btn-favorite {
-        color: crimson;
+        color: $red;
         padding: 0 0 10px 0;
       }
     }
