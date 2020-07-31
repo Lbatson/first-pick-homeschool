@@ -10,12 +10,11 @@
             <h3>{{ object.username }}</h3>
             <div>{{ object.bio }}</div>
             <div>{{ object.location }}</div>
-            <div>{{ object.occupation }}</div>
-            <div><a href="{{ object.website }}">{% trans "Website" %}</a></div>
-            <div><a href="{{ object.facebook }}">{% trans "Facebook" %}</a></div>
-            <div><a href="{{ object.instagram }}">{% trans "Instagram" %}</a></div>
-            <div><a href="{{ object.twitter }}">{% trans "Twitter" %}</a></div>
-            <div><a href="{{ object.pintrest }}">{% trans "Pintrest" %}</a></div>
+            {% if object.website %}<div><a href="{{ object.website }}">{% trans "Website" %}</a></div>{% endif %}
+            {% if object.facebook %}<div><a href="{{ object.facebook }}">{% trans "Facebook" %}</a></div>{% endif %}
+            {% if object.instagram %}<div><a href="{{ object.instagram }}">{% trans "Instagram" %}</a></div>{% endif %}
+            {% if object.twitter %}<div><a href="{{ object.twitter }}">{% trans "Twitter" %}</a></div>{% endif %}
+            {% if object.pintrest %}<div><a href="{{ object.pintrest }}">{% trans "Pintrest" %}</a></div>{% endif %}
         </div>
     </div>
     {% if object.public_reviews %}

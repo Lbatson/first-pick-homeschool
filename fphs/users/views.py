@@ -25,9 +25,13 @@ class UserFavoritesView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return self.request.user.favorite_curriculums.annotate(
-            avg_rating=Coalesce(Avg("reviews__rating"), 0.0)
-        ).all()
+        return (
+            self.request.user.favorite_curriculums.annotate(
+                avg_rating=Coalesce(Avg("reviews__rating"), 0.0)
+            )
+            .all()
+            .order_by("favoritecurriculum__created")
+        )
 
 
 class UserProfileView(DetailView):
