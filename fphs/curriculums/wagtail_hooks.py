@@ -61,7 +61,7 @@ class CurriculumAdmin(ModelAdmin):
     )
     search_fields = (
         "name",
-        "created_by",
+        "created_by__username",
     )
 
 
@@ -74,7 +74,7 @@ class ReviewAdmin(ModelAdmin):
         "user",
     )
     list_filter = ("verified",)
-    search_fields = ("user",)
+    search_fields = ("user__username",)
 
 
 class HomeschoolGroup(ModelAdminGroup):
