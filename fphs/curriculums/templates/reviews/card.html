@@ -5,7 +5,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12 text-center">
-                    {% if detail %}<h5><a href="{% url 'curriculums:detail' detail.id %}">{{detail}}</a></h5>{% endif %}
+                    {% if detail %}<h5><a href="{% url 'curriculums:detail' detail.slug %}">{{detail}}</a></h5>{% endif %}
                     {% include 'reviews/text.html' with review=review %}
                 </div>
             </div>

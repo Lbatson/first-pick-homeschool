@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (
-    CurriculumIndexView,
+    CurriculumListView,
     detail,
     favorite,
     CurriculumCreateView,
@@ -13,13 +13,17 @@ from .views import (
 
 app_name = "curriculums"
 urlpatterns = [
-    path("", CurriculumIndexView.as_view(), name="index"),
-    path("<int:id>/", detail, name="detail"),
-    path("<int:id>/favorite/", favorite, name="favorite"),
+    path("", CurriculumListView.as_view(), name="index"),
+    path("<slug:slug>/", detail, name="detail"),
+    path("<slug:slug>/favorite/", favorite, name="favorite"),
     path("create/", CurriculumCreateView.as_view(), name="create"),
-    path("<int:id>/reviews/", ReviewsIndexView.as_view(), name="reviews"),
-    path("<int:id>/reviews/create/", ReviewCreateView.as_view(), name="reviews-create"),
+    path("<slug:slug>/reviews/", ReviewsIndexView.as_view(), name="reviews"),
     path(
-        "<int:id>/reviews/<int:pk>/", ReviewUpdateView.as_view(), name="reviews-update"
+        "<slug:slug>/reviews/create/", ReviewCreateView.as_view(), name="reviews-create"
+    ),
+    path(
+        "<slug:slug>/reviews/<int:pk>/",
+        ReviewUpdateView.as_view(),
+        name="reviews-update",
     ),
 ]

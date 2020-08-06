@@ -24,7 +24,7 @@ from .models import (
 )
 
 
-class CurriculumIndexView(generic.ListView):
+class CurriculumListView(generic.ListView):
     model = Curriculum
     template_name = "curriculums/index.html"
     context_object_name = "curriculums"
@@ -34,7 +34,7 @@ class CurriculumIndexView(generic.ListView):
         query = Q()
         filters = self.get_filters()
         order = self.get_sort().label
-        search = self.request.GET.get("search")
+        search = self.request.GET.get("q")
 
         if search:
             query.add(Q(name__icontains=search), Q.OR)
@@ -68,6 +68,7 @@ class CurriculumIndexView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["q"] = self.request.GET.get("search")
         context["filters"] = self.get_filters()
         context["sorters"] = Sort.Labels.choices
         context["sort"] = self.request.GET.get("sort")
@@ -105,8 +106,8 @@ class CurriculumIndexView(generic.ListView):
 
 
 @require_GET
-def detail(request, id):
-    curriculum = get_object_or_404(Curriculum, pk=id, is_confirmed=True)
+def detail(request, slug):
+    curriculum = get_object_or_404(Curriculum, slug=slug, is_confirmed=True)
     categories = set(
         map(lambda s: s.category, curriculum.subjects.select_related("category"))
     )
@@ -130,11 +131,13 @@ def detail(request, id):
 
 
 @login_required
-def favorite(request, id):
-    curriculum = get_object_or_404(Curriculum, pk=id, is_confirmed=True)
+def favorite(request, slug):
+    curriculum = get_object_or_404(Curriculum, slug=slug, is_confirmed=True)
     # Redirect to detail page after login
     if request.method == "GET":
-        return HttpResponseRedirect(reverse("curriculums:detail", kwargs={"id": id}))
+        return HttpResponseRedirect(
+            reverse("curriculums:detail", kwargs={"slug": curriculum.slug})
+        )
 
     # Save favorite and go back to previous page
     user: User = request.user
@@ -164,11 +167,16 @@ class ReviewsIndexView(generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        return Review.objects.filter(curriculum_id=self.kwargs.get("id"))
+        curriculum = get_object_or_404(
+            Curriculum, slug=self.kwargs.get("slug"), is_confirmed=True
+        )
+        return Review.objects.filter(curriculum_id=curriculum.id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["curriculum"] = get_object_or_404(Curriculum, id=self.kwargs.get("id"))
+        context["curriculum"] = get_object_or_404(
+            Curriculum, slug=self.kwargs.get("slug")
+        )
         return context
 
 
@@ -178,24 +186,26 @@ class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateVi
     success_message = "Your review has been submitted"
 
     def get_success_url(self):
-        return reverse("curriculums:detail", kwargs={"id": self.kwargs.get("id")})
+        return reverse("curriculums:detail", kwargs={"slug": self.kwargs.get("slug")})
 
     def form_valid(self, form):
         form.instance.curriculum = get_object_or_404(
-            Curriculum, id=self.kwargs.get("id")
+            Curriculum, slug=self.kwargs.get("slug")
         )
         form.instance.user = self.request.user
         return super().form_valid(form)
 
     def render_to_response(self, context, **response_kwargs):
-        c_id = self.kwargs.get("id")
-        curriculum = get_object_or_404(Curriculum, id=c_id)
+        slug = self.kwargs.get("slug")
+        curriculum = get_object_or_404(Curriculum, slug=slug)
         context["curriculum"] = curriculum
         review = (
             curriculum.reviews.filter(user__id=self.request.user.id).first() or None
         )
         if review:
-            return redirect("curriculums:reviews-update", id=c_id, pk=review.id)
+            return redirect(
+                "curriculums:reviews-update", slug=curriculum.slug, pk=review.id
+            )
         return super().render_to_response(context, **response_kwargs)
 
 
@@ -205,11 +215,13 @@ class ReviewUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateVi
     success_message = "Your review has been updated"
 
     def get_success_url(self):
-        return reverse("curriculums:detail", kwargs={"id": self.kwargs.get("id")})
+        return reverse("curriculums:detail", kwargs={"slug": self.kwargs.get("slug")})
 
     def get_object(self, queryset=None):
         return get_object_or_404(Review, pk=self.kwargs.get("pk"))
 
     def render_to_response(self, context, **response_kwargs):
-        context["curriculum"] = get_object_or_404(Curriculum, pk=self.kwargs.get("id"))
+        context["curriculum"] = get_object_or_404(
+            Curriculum, slug=self.kwargs.get("slug")
+        )
         return super().render_to_response(context, **response_kwargs)

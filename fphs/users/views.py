@@ -30,7 +30,7 @@ class UserFavoritesView(ListView):
                 avg_rating=Coalesce(Avg("reviews__rating"), 0.0)
             )
             .all()
-            .order_by("favoritecurriculum__created")
+            .order_by("-favoritecurriculum__created")
         )
 
 

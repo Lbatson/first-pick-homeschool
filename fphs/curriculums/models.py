@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.forms import ModelForm, TextInput, Textarea, Select
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -109,6 +110,7 @@ class Sort:
 class Curriculum(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=2000)
+    slug = models.SlugField(max_length=200, unique=True)
     link = models.URLField(max_length=200)
     image = models.ForeignKey(
         "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL
@@ -137,6 +139,9 @@ class Curriculum(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("curriculums:detail", kwargs={"slug": self.slug})
 
 
 class CurriculumForm(ModelForm):

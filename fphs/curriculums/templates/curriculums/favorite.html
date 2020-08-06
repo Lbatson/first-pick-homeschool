@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<form id="favorite-{{ curriculum.id }}" action="{% url 'curriculums:favorite' curriculum.id %}" method="post">
+<form id="favorite-{{ curriculum.slug }}" action="{% url 'curriculums:favorite' curriculum.slug %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ request.get_full_path }}">
     <button type="submit" class="btn btn-link btn-favorite" aria-label="{% if is_favorite %}Unfavorite{% else %}Favorite{% endif %} {{ curriculum }}">
