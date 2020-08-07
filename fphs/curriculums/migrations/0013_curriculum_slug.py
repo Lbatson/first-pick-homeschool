@@ -24,6 +24,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="curriculum",
             name="slug",
-            field=models.SlugField(max_length=200, null=False, unique=True),
+            field=models.SlugField(max_length=200, unique=True),
         ),
     ]

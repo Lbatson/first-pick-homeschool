@@ -3,6 +3,7 @@ from django.db import models
 from django.forms import ModelForm, TextInput, Textarea, Select
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+import uuid
 
 
 class Category(models.Model):
@@ -158,7 +159,7 @@ class CurriculumForm(ModelForm):
 
 class Review(models.Model):
     RATING_CHOICES = ((1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5"))
-
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     curriculum = models.ForeignKey(
         Curriculum, on_delete=models.CASCADE, related_name="reviews"
     )

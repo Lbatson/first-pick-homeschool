@@ -202,9 +202,10 @@ class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateVi
         review = (
             curriculum.reviews.filter(user__id=self.request.user.id).first() or None
         )
+        # Redirect user to update review if one exists
         if review:
             return redirect(
-                "curriculums:reviews-update", slug=curriculum.slug, pk=review.id
+                "curriculums:reviews:update", slug=curriculum.slug, uuid=review.uuid
             )
         return super().render_to_response(context, **response_kwargs)
 
@@ -218,9 +219,12 @@ class ReviewUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateVi
         return reverse("curriculums:detail", kwargs={"slug": self.kwargs.get("slug")})
 
     def get_object(self, queryset=None):
-        return get_object_or_404(Review, pk=self.kwargs.get("pk"))
+        return get_object_or_404(Review, uuid=self.kwargs.get("uuid"))
 
     def render_to_response(self, context, **response_kwargs):
+        # Prevent editing review by another user
+        if self.request.user != self.object.user:
+            return redirect("curriculums:detail", slug=self.kwargs.get("slug"))
         context["curriculum"] = get_object_or_404(
             Curriculum, slug=self.kwargs.get("slug")
         )
