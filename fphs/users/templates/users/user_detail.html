@@ -7,7 +7,7 @@
 {% block content %}
     <div class="row">
         <div class="col-12">
-            <h3>{{ object.username }}</h3>
+            <h3>{% if object.name %}{{ object.name }}{% else %}{{ object.username }}{% endif %}</h3>
             <div>{{ object.bio }}</div>
             <div>{{ object.location }}</div>
             {% if object.website %}<div><a href="{{ object.website }}">{% trans "Website" %}</a></div>{% endif %}
