@@ -4,11 +4,5 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-#echo 'Collecting static files...'
-python /app/manage.py collectstatic --noinput
-
-echo 'Running migrations...'
-python /app/manage.py migrate
-
 echo 'Starting application...'
-/usr/local/bin/gunicorn config.asgi --bind 0.0.0.0:8000 --chdir=/app -k uvicorn.workers.UvicornWorker
+/usr/local/bin/gunicorn config.asgi --bind 0.0.0.0:$PORT --chdir=/app -k uvicorn.workers.UvicornWorker

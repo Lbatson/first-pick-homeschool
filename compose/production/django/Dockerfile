@@ -10,6 +10,7 @@ RUN npm run build
 FROM python:3.8-slim-buster
 
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
 RUN apt-get update \
   # dependencies for building Python packages
@@ -46,6 +47,4 @@ USER django
 
 WORKDIR /app
 
-ENTRYPOINT ["/entrypoint"]
-EXPOSE 8000
 CMD ["/start"]

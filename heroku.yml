@@ -1,0 +1,16 @@
+setup:
+  addons:
+    - plan: heroku-postgresql:hobby-dev
+      version: 11
+      as: DATABASE
+    - plan: heroku-redis:hobby-dev
+      version: 6
+      as: CACHE
+build:
+  docker:
+    web: compose/production/django/Dockerfile
+release:
+  image: web
+  command:
+    - python manage.py collectstatic --noinput
+    - python manage.py migrate
