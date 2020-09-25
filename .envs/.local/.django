@@ -20,19 +20,11 @@ DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
 
 # Database
 # ------------------------------------------------------------------------------
-DJANGO_DB_ENGINE=django.db.backends.postgresql
-DJANGO_DB_NAME=fphs
-DJANGO_DB_HOST=fphs_postgres
-DJANGO_DB_PORT=5432
-DJANGO_DB_USERNAME=fphslocal
-DJANGO_DB_PASSWORD=password
+DATABASE_URL=postgres://fphslocal:password@fphs_postgres:5432/fphs
 
 # Cache
 # ------------------------------------------------------------------------------
-DJANGO_CACHE_BACKEND=django_redis.cache.RedisCache
-DJANGO_CACHE_LOCATION=redis
-DJANGO_CACHE_TIMEOUT=60
-DJANGO_CACHE_OPTIONS=CLIENT_CLASS=django_redis.client.DefaultClient,IGNORE_EXCEPTIONS=True
+REDIS_URL=redis://redis:6379/1
 
 # Email
 # ------------------------------------------------------------------------------
@@ -41,28 +33,28 @@ DJANGO_EMAIL_HOST=fphs_mailhog
 DJANGO_EMAIL_PORT=1025
 DJANGO_EMAIL_TIMEOUT=5
 DJANGO_DEFAULT_FROM_EMAIL=First Pick Homeschool <support@firstpickhomeschool.com>
-DJANGO_SERVER_EMAIL=First Pick Homeschool <support@firstpickhomeschool.com>
-DJANGO_EMAIL_SUBJECT_PREFIX=
+DJANGO_ANYMAIL_OPTIONS=
 
 # Storages
 # ------------------------------------------------------------------------------
+DJANGO_AWS_ACCESS_KEY_ID=
+DJANGO_AWS_SECRET_ACCESS_KEY=
 DJANGO_AWS_STORAGE_BUCKET_NAME=
 DJANGO_AWS_S3_REGION_NAME=
+DJANGO_AWS_S3_CUSTOM_DOMAIN=
 
 # Logging
 # ------------------------------------------------------------------------------
 DJANGO_SENTRY_DSN=
 DJANGO_SENTRY_LOG_LEVEL=20
+DJANGO_SENTRY_ENVIRONMENT=
+DJANGO_SENTRY_TRACES_SAMPLE_RATE=
 
 # Security
 # ------------------------------------------------------------------------------
+DJANGO_SECURE_SSL_REDIRECT=False
 DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=False
 DJANGO_SECURE_HSTS_PRELOAD=False
 DJANGO_SECURE_CONTENT_TYPE_NOSNIFF=False
 DJANGO_RECAPTCHA_PUBLIC_KEY=6LeJqacZAAAAAK16A8GmIiiTrmIvl68BdjFdmMpJ
 DJANGO_RECAPTCHA_PRIVATE_KEY=6LeJqacZAAAAAMz3qS2Z24J1PaNXV4zrVxRgbEGd
-
-# Performance
-# ------------------------------------------------------------------------------
-DJANGO_COMPRESS_ENABLED=False
-WEB_CONCURRENCY=4

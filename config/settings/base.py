@@ -1,10 +1,10 @@
 """
 Base settings to build other settings files upon.
 """
-from django.contrib.messages import constants as messages
 from pathlib import Path
 
 import environ
+from django.contrib.messages import constants as messages
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # fphs/
@@ -48,7 +48,12 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # Django Admin URL.
 ADMIN_URL = env.str("DJANGO_ADMIN_URL")
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [env.tuple("DJANGO_ADMIN_ACCOUNT")]
+ADMINS = [
+    env.tuple(
+        "DJANGO_ADMIN_ACCOUNT",
+        default=("First Pick Homeschool", "noreply@firstpickhomeschool.com"),
+    )
+]
 # For creating the initial superuser
 ADMIN_EMAIL = ADMINS[0][1]
 ADMIN_USERNAME = env.str("DJANGO_ADMIN_USERNAME")
@@ -60,41 +65,30 @@ MANAGERS = ADMINS
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": env.str("DJANGO_DB_ENGINE"),
-        "NAME": env.str("DJANGO_DB_NAME"),
-        "USER": env.str("DJANGO_DB_USERNAME"),
-        "PASSWORD": env.str("DJANGO_DB_PASSWORD"),
-        "HOST": env.str("DJANGO_DB_HOST"),
-        "PORT": env.int("DJANGO_DB_PORT"),
-    }
-}
-# DATABASES = {"default": env.db("DJANGO_DB")}
+DATABASES = {"default": env.db()}
+DATABASES["default"]["CONN_MAX_AGE"] = 600
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["default"]["CONN_MAX_AGE"] = 60
 
 
 # CACHES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = {
-    "default": {
-        "BACKEND": env.str("DJANGO_CACHE_BACKEND"),
-        "LOCATION": f'redis://{env.str("DJANGO_CACHE_LOCATION")}',
-        "TIMEOUT": env.int("DJANGO_CACHE_TIMEOUT"),
-        "OPTIONS": env.dict("DJANGO_CACHE_OPTIONS"),
-    }
-}
+CACHES = {"default": env.cache("REDIS_URL")}
+CACHES["default"]["TIMEOUT"] = 60
 # Mimicing memcache behavior.
 # http://jazzband.github.io/django-redis/latest/#_memcached_exceptions_behavior
-# CACHES["default"]["OPTIONS"]["IGNORE_EXCEPTIONS"] = True
+CACHES["default"]["OPTIONS"] = {
+    "CLIENT_CLASS": "django_redis.client.DefaultClient",
+    "IGNORE_EXCEPTIONS": True,
+}
 
 
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env.str("DJANGO_EMAIL_BACKEND")
+EMAIL_BACKEND = env.str(
+    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.locmem.EmailBackend"
+)
 
 if DEBUG:
     # https://docs.djangoproject.com/en/dev/ref/settings/#email-host
@@ -252,7 +246,7 @@ LOGIN_REDIRECT_URL = "users:redirect"
 LOGIN_URL = "account_login"
 # django-allauth
 # ------------------------------------------------------------------------------
-ACCOUNT_ALLOW_REGISTRATION = True
+ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", default=True)
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
@@ -390,5 +384,7 @@ TAGGIT_CASE_INSENSITIVE = True
 
 WAGTAIL_SITE_NAME = "First Pick Homeschool"
 WAGTAILSEARCH_BACKENDS = {
-    "default": {"BACKEND": "wagtail.contrib.postgres_search.backend",},
+    "default": {
+        "BACKEND": "wagtail.contrib.postgres_search.backend",
+    },
 }

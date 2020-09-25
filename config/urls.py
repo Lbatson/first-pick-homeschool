@@ -4,8 +4,9 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 from django.views import defaults as default_views
-from fphs.utils.views import robots_txt, ContactView
 from wagtail.contrib.sitemaps.views import sitemap
+
+from fphs.utils.views import ContactView, robots_txt
 
 urlpatterns = [
     path("robots.txt", robots_txt, name="robots"),
@@ -55,7 +56,7 @@ if settings.DEBUG:
         ),
         path("500/", default_views.server_error),
     ]
-    if "debug_toolbar" in settings.INSTALLED_APPS:
-        import debug_toolbar
-
-        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+    # if "debug_toolbar" in settings.INSTALLED_APPS:
+    #     import debug_toolbar
+    #
+    #     urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns

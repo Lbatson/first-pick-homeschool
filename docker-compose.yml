@@ -21,8 +21,8 @@ services:
     ports:
       - "80:8000"
     env_file:
-      - ./.envs/.local/.django.env
-      - ./.envs/.local/.postgres.env
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
     command: /start
 
   postgres:
@@ -37,7 +37,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - ./.envs/.local/.postgres.env
+      - ./.envs/.local/.postgres
 
   redis:
     image: redis:3.2.10
@@ -46,6 +46,21 @@ services:
       - "6379:6379"
     volumes:
       - local_redis_data:/data
+
+  docs:
+    image: fphs_docs
+    container_name: fphs_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./cookiecutter:/app/cookiecutter:z
+    ports:
+      - "7000:7000"
 
   mailhog:
     image: mailhog/mailhog:v1.0.0

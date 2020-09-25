@@ -15,11 +15,11 @@ import psycopg2
 
 try:
     psycopg2.connect(
-        dbname="${DJANGO_DB_NAME}",
-        user="${DJANGO_DB_USERNAME}",
-        password="${DJANGO_DB_PASSWORD}",
-        host="${DJANGO_DB_HOST}",
-        port="${DJANGO_DB_PORT}",
+        dbname="${POSTGRES_DB}",
+        user="${POSTGRES_USER}",
+        password="${POSTGRES_PASSWORD}",
+        host="${POSTGRES_HOST}",
+        port="${POSTGRES_PORT}",
     )
 except psycopg2.OperationalError:
     sys.exit(-1)

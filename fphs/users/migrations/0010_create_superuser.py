@@ -14,7 +14,7 @@ def create_superuser(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("users", "0001_initial"),
+        ("users", "0009_remove_user_occupation"),
     ]
 
     operations = [migrations.RunPython(create_superuser)]

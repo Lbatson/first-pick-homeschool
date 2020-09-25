@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -o errexit
-set -o pipefail
-set -o nounset
-
-echo 'Starting application...'
-/usr/local/bin/gunicorn config.asgi --bind 0.0.0.0:$PORT --chdir=/app -k uvicorn.workers.UvicornWorker

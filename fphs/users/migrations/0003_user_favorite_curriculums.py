@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('curriculums', '0011_auto_20200529_0234'),
-        ('users', '0002_create_superuser'),
+        ('users', '0001_initial'),
     ]
 
     operations = [
