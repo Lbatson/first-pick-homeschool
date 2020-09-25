@@ -26,10 +26,7 @@ services:
     command: /start
 
   postgres:
-    build:
-      context: .
-      dockerfile: ./compose/local/postgres/Dockerfile
-    image: fphs_postgres
+    image: postgres:11.9
     container_name: fphs_postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
@@ -40,7 +37,7 @@ services:
       - ./.envs/.local/.postgres
 
   redis:
-    image: redis:3.2.10
+    image: redis:5.0.9
     container_name: fphs_redis
     ports:
       - "6379:6379"
@@ -48,11 +45,11 @@ services:
       - local_redis_data:/data
 
   docs:
-    image: fphs_docs
-    container_name: fphs_docs
     build:
       context: .
       dockerfile: ./compose/local/docs/Dockerfile
+    image: fphs_docs
+    container_name: fphs_docs
     env_file:
       - ./.envs/.local/.django
     volumes:
