@@ -193,7 +193,7 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    # "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.google",
     "captcha",
     "modelcluster",
@@ -258,23 +258,28 @@ ACCOUNT_ADAPTER = "fphs.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = "fphs.users.adapters.SocialAccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-# SOCIALACCOUNT_PROVIDERS = {
-#     "facebook": {
-#         "METHOD": "js-sdk",
-#         "SCOPE": ["email", "public_profile"],
-#         "AUTH_PARAMS": {"auth_type": "reauthenticate"},
-#         "INIT_PARAMS": {"cookie": True},
-#         "FIELDS": ["id", "first_name", "last_name", "name", "name_format", "picture", "short_name"],
-#         "EXCHANGE_TOKEN": True,
-#         "LOCALE_FUNC": lambda request: "en_US",
-#         "VERIFIED_EMAIL": False,
-#         "VERSION": "v7.0"
-#     },
-#     "google": {
-#         "SCOPE": ["email", "profile"],
-#         "AUTH_PARAMS": {"access_type": "online"}
-#     }
-# }
+SOCIALACCOUNT_PROVIDERS = {
+    "facebook": {
+        "METHOD": "oauth2",
+        "SCOPE": ["email", "public_profile"],
+        "AUTH_PARAMS": {"auth_type": "reauthenticate"},
+        "INIT_PARAMS": {"cookie": True},
+        "FIELDS": [
+            "id",
+            "first_name",
+            "last_name",
+            "name",
+            "name_format",
+            "picture",
+            "short_name",
+        ],
+        "EXCHANGE_TOKEN": True,
+        "LOCALE_FUNC": lambda request: "en_US",
+        "VERIFIED_EMAIL": False,
+        "VERSION": "v7.0",
+    },
+    "google": {"SCOPE": ["email", "profile"], "AUTH_PARAMS": {"access_type": "online"}},
+}
 
 
 # PASSWORDS

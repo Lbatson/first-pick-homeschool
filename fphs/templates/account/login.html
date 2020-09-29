@@ -19,18 +19,16 @@
                     for a {{ site_name }} account.{% endblocktrans %}</p>
 
                 <div class="socialaccount_ballot">
-                    <a href="/accounts/google/login/?process=login">
+                    <a title="Google" class="socialaccount_provider google" href="/accounts/google/login/?process=login">
                         <img class="img-fluid"
                              alt="Google Sign-In"
                              src="{% static 'images/google/btn_google_signin_light_normal_web@2x.png' %}"
                              onclick="this.src='{% static 'images/google/btn_google_signin_light_pressed_web@2x.png' %}'"
                              onmouseout="this.src='{% static 'images/google/btn_google_signin_light_normal_web@2x.png' %}'"/>
                     </a>
-
-                    {#            <ul class="socialaccount_providers">#}
-                    {#                {% include "socialaccount/snippets/provider_list.html" with process="login" %}#}
-                    {#            </ul>#}
-
+                    <a title="Facebook" class="socialaccount_provider facebook" href="/accounts/facebook/login/?process=login">
+                        <img class="img-fluid" alt="Facebook Sign-In" src="{% static 'images/facebook/facebook.png' %}"/>
+                    </a>
                     <div>{% trans 'or' %}</div>
                 </div>
 

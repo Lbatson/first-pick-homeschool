@@ -109,8 +109,20 @@ a {
   flex-flow: column nowrap;
   text-align: center;
 
-  img {
-    max-height: 60px;
+  & a {
+    margin: 10px 0;
+  }
+
+  .google {
+    img {
+      max-height: 60px;
+    }
+  }
+
+  .facebook {
+    img {
+      max-height: 40px;
+    }
   }
 }
 
