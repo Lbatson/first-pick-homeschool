@@ -4,23 +4,25 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Avg, Q
 from django.db.models.functions import Coalesce
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import generic
 from django.views.decorators.http import require_GET
+
 from fphs.users.models import User
 from fphs.utils.models import Metadata
+
 from .models import (
+    Age,
+    Category,
     Curriculum,
     CurriculumForm,
-    ReviewForm,
-    Category,
-    Subject,
     Grade,
-    Age,
     ReligiousPreference,
-    Sort,
     Review,
+    ReviewForm,
+    Sort,
+    Subject,
 )
 
 
@@ -86,7 +88,7 @@ class CurriculumListView(generic.ListView):
         def get_selections(name):
             try:
                 return list(map(int, self.request.GET.getlist(name)))
-            except:
+            except Exception:
                 return []
 
         return {
@@ -101,7 +103,7 @@ class CurriculumListView(generic.ListView):
         try:
             s = self.request.GET.get("sort")
             return Sort.Values(int(s)) if s.isdigit() else Sort.Values.NEWEST
-        except:
+        except Exception:
             return Sort.Values.NEWEST
 
 
@@ -222,10 +224,33 @@ class ReviewUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateVi
         return get_object_or_404(Review, uuid=self.kwargs.get("uuid"))
 
     def render_to_response(self, context, **response_kwargs):
-        # Prevent editing review by another user
+        # Prevent editing a review by another user
         if self.request.user != self.object.user:
             return redirect("curriculums:detail", slug=self.kwargs.get("slug"))
         context["curriculum"] = get_object_or_404(
             Curriculum, slug=self.kwargs.get("slug")
         )
         return super().render_to_response(context, **response_kwargs)
+
+
+class ReviewDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+    context_object_name = "review"
+    template_name = "reviews/delete.html"
+
+    def get_success_url(self):
+        return reverse("curriculums:detail", kwargs={"slug": self.kwargs.get("slug")})
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Review, uuid=self.kwargs.get("uuid"))
+
+    def get(self, request, *args, **kwargs):
+        # Preview viewing delete page for review by another user
+        if request.user != self.get_object().user:
+            return redirect("curriculums:detail", slug=self.kwargs.get("slug"))
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        # Prevent deleting a review by another user
+        if request.user != self.get_object().user:
+            return redirect("curriculums:detail", slug=self.kwargs.get("slug"))
+        return super().post(request, *args, **kwargs)

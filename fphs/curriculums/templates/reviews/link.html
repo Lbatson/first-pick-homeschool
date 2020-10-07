@@ -1,5 +1,6 @@
 {% if review %}
-    <a href="{% url 'curriculums:reviews:update' curriculum.slug review.uuid %}">Edit your review</a>
+    <a href="{% url 'curriculums:reviews:update' curriculum.slug review.uuid %}">Edit</a> or
+    <a href="{% url 'curriculums:reviews:delete' curriculum.slug review.uuid %}">Delete</a> your review
 {% else %}
     <a href="{% url 'curriculums:reviews:create' curriculum.slug %}">Write a review</a>
 {% endif %}
