@@ -7,5 +7,6 @@ set -o nounset
 echo 'Collecting static files...'
 python manage.py collectstatic --noinput --clear
 
-echo 'Running migrations...'
+echo 'Starting migrations...'
+python manage.py makemigrations
 python manage.py migrate

@@ -4,7 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-echo 'Running migrations...'
+echo 'Starting migrations...'
+python manage.py makemigrations
 python manage.py migrate
 
 echo 'Starting application...'
